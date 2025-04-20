@@ -1,14 +1,16 @@
-import Token
+import Lexer (newLexer, parseWhile)
 
 main :: IO ()
 main = do
-  let tok = Token {literal = "let", token_type = Let}
-  printToken tok
-  let tok = Token {literal = "abc", token_type = Identifier}
-  printToken tok
-  let tok = Token {literal = "=", token_type = Equal}
-  printToken tok
-  let tok = Token {literal = "5", token_type = Number}
-  printToken tok
-  let tok = Token {literal = ";", token_type = Semicolon}
-  printToken tok
+  let input =
+        "fn is_gt_ten(num: int) bool {\n\
+        \ if (num > 10) {\n\
+        \ return true;\n\
+        \ } else {\n\
+        \ return false;\n\
+        \ }\n\
+        \ }\n\
+        \ let ten = 5 + 5 * 4 / 2 - 5;\n\
+        \ print(is_big(ten));"
+
+  parseWhile (newLexer input)
