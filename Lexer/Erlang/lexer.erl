@@ -35,8 +35,7 @@
           "int" => int}).
 
 new(Input) ->
-    L = #lexer{input = Input},
-    advance(L).
+    advance(#lexer{input = Input}).
 
 parse_while(L) ->
     {T = #token{type = Type}, NewL} = next_token(L),

@@ -36,8 +36,7 @@ defmodule Lexer do
   }
 
   def new(input) do
-    %Lexer{input: input}
-    |> advance()
+    advance(%Lexer{input: input})
   end
 
   def parse_while(lexer) do
