@@ -18,12 +18,15 @@ data Lexer = Lexer
 newLexer :: String -> Lexer
 newLexer input = advance (Lexer input 0 0 Nothing)
 
-parseWhile :: Lexer -> IO ()
-parseWhile lexer =
-  let (tok, newLexer) = nextToken lexer
-   in if token_type tok == Eof
-        then return ()
-        else print tok >> parseWhile newLexer
+advance :: Lexer -> Lexer
+advance lexer@(Lexer input _ p _)
+  | p >= length input = lexer {char = Nothing}
+  | otherwise =
+      lexer
+        { curr = p,
+          peek = p + 1,
+          char = Just (input !! p)
+        }
 
 nextToken :: Lexer -> (Token, Lexer)
 nextToken lexer@(Lexer _ _ _ (Just ch)) =
@@ -60,13 +63,3 @@ readIdentifier = readWhile isIdentChar
 
 readNumber :: Lexer -> (String, Lexer)
 readNumber = readWhile isDigit
-
-advance :: Lexer -> Lexer
-advance lexer@(Lexer input _ p _)
-  | p >= length input = lexer {char = Nothing}
-  | otherwise =
-      lexer
-        { curr = p,
-          peek = p + 1,
-          char = Just (input !! p)
-        }
