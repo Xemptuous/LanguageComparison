@@ -5,6 +5,35 @@
 -record(token, {type, literal = ""}).
 -record(lexer, {input, curr = 0, peek = 0, ch}).
 
+-define(SINGLE_TOKEN_MAP,
+        #{$+ => plus,
+          $- => dash,
+          $* => asterisk,
+          $+ => plus,
+          $* => asterisk,
+          $/ => slash,
+          $- => dash,
+          $+ => plus,
+          $= => equal,
+          $< => lessthan,
+          $> => greaterthan,
+          $; => semicolon,
+          $: => colon,
+          $( => lparen,
+          $) => rparen,
+          ${ => lbrace,
+          $} => rbrace}).
+-define(IDENTIFIER_MAP,
+        #{"let" => let_,
+          "fn" => function,
+          "if" => if_,
+          "else" => else_,
+          "return" => return,
+          "true" => boolean,
+          "false" => boolean,
+          "bool" => bool,
+          "int" => int}).
+
 new(Input) ->
     L = #lexer{input = Input},
     advance(L).
@@ -14,8 +43,6 @@ parse_while(L) ->
     case Type of
         eof ->
             ok;
-        whitespace ->
-            parse_while(NewL);
         _ ->
             print_token(T),
             parse_while(NewL)
@@ -31,94 +58,56 @@ advance(L = #lexer{input = Input, peek = P}) ->
                     ch = lists:nth(P + 1, Input)}
     end.
 
-next_token(L = #lexer{ch = $*}) ->
-    {#token{type = asterisk, literal = "*"}, advance(L)};
-next_token(L = #lexer{ch = $/}) ->
-    {#token{type = slash, literal = "/"}, advance(L)};
-next_token(L = #lexer{ch = $-}) ->
-    {#token{type = dash, literal = "-"}, advance(L)};
-next_token(L = #lexer{ch = $+}) ->
-    {#token{type = plus, literal = "+"}, advance(L)};
-next_token(L = #lexer{ch = $=}) ->
-    {#token{type = equal, literal = "="}, advance(L)};
-next_token(L = #lexer{ch = $<}) ->
-    {#token{type = lessthan, literal = "<"}, advance(L)};
-next_token(L = #lexer{ch = $>}) ->
-    {#token{type = greaterthan, literal = ">"}, advance(L)};
-next_token(L = #lexer{ch = $;}) ->
-    {#token{type = semicolon, literal = ";"}, advance(L)};
-next_token(L = #lexer{ch = $:}) ->
-    {#token{type = colon, literal = ":"}, advance(L)};
-next_token(L = #lexer{ch = $(}) ->
-    {#token{type = lparen, literal = "("}, advance(L)};
-next_token(L = #lexer{ch = $)}) ->
-    {#token{type = rparen, literal = ")"}, advance(L)};
-next_token(L = #lexer{ch = ${}) ->
-    {#token{type = lbrace, literal = "{"}, advance(L)};
-next_token(L = #lexer{ch = $}}) ->
-    {#token{type = rbrace, literal = "}"}, advance(L)};
-% whitespace %
-next_token(L = #lexer{ch = C}) when C == 32 orelse C >= 9 andalso C =< 13 ->
-    {#token{type = whitespace}, advance(L)};
-% alphabetic %
-next_token(L = #lexer{ch = C})
-    when C >= $a andalso C =< $z orelse C >= $A andalso C =< $Z orelse C == $_ ->
-    {Ident, NewL} = read_identifier(L),
-    Type =
-        case Ident of
-            "let" ->
-                let_;
-            "fn" ->
-                function;
-            "if" ->
-                if_;
-            "else" ->
-                else_;
-            "return" ->
-                return;
-            "true" ->
-                boolean;
-            "false" ->
-                boolean;
-            "bool" ->
-                bool;
-            "int" ->
-                int;
-            _ ->
-                identifier
-        end,
-    {#token{type = Type, literal = Ident}, NewL};
-% numeric %
-next_token(L = #lexer{ch = C}) when C >= $0 andalso C =< $9 ->
-    {Num, NewL} = read_number(L),
-    {#token{type = number, literal = Num}, NewL};
-% EOF %
-next_token(L = #lexer{ch = eof}) ->
-    {#token{type = eof}, advance(L)};
-next_token(L = #lexer{ch = C}) ->
-    {#token{type = illegal, literal = C}, advance(L)}.
+next_token(L = #lexer{ch = Ch}) ->
+    case maps:get(Ch, ?SINGLE_TOKEN_MAP, undefined) of
+        undefined ->
+            next_token_fallback(L);
+        TokenType ->
+            {#token{type = TokenType, literal = <<Ch>>}, advance(L)}
+    end.
 
-% read_identifier %
-read_identifier(L = #lexer{ch = C})
-    when C >= $a andalso C =< $z orelse C >= $A andalso C =< $Z orelse C == $_ ->
-    read_identifier(L, []).
+next_token_fallback(L = #lexer{ch = C}) ->
+    if C == eof ->
+           {#token{type = eof}, L};
+       C =< 32 -> % whitespace
+           next_token(advance(L));
+       % identifier
+       C >= $a, C =< $z; C >= $A, C =< $Z; C == $_ ->
+           {Ident, NewL} = read_identifier(L),
+           case maps:get(Ident, ?IDENTIFIER_MAP, undefined) of
+               undefined ->
+                   {#token{type = identifier, literal = Ident}, NewL};
+               Type ->
+                   {#token{type = Type, literal = Ident}, NewL}
+           end;
+       % number
+       C >= $0, C =< $9 ->
+           {Num, NewL} = read_number(L),
+           {#token{type = number, literal = Num}, NewL};
+       true ->
+           {#token{type = illegal, literal = <<C>>}, advance(L)}
+    end.
 
-read_identifier(L = #lexer{ch = C}, Acc)
-    when C >= $a andalso C =< $z orelse C >= $A andalso C =< $Z orelse C == $_ ->
-    NewL = advance(L),
-    read_identifier(NewL, [C | Acc]);
-read_identifier(L, Acc) ->
-    {lists:reverse(Acc), L}.
+read_while(L = #lexer{ch = Ch}, Acc, Pred) ->
+    case Pred(Ch) of
+        true ->
+            NewL = advance(L),
+            read_while(NewL, [Ch | Acc], Pred);
+        false ->
+            {lists:reverse(Acc), L}
+    end.
 
-% read_number %
-read_number(L = #lexer{ch = C}) when C >= $0 andalso C =< $9 ->
-    read_number(L, []).
+read_identifier(L) ->
+    read_while(L, [], fun is_letter/1).
 
-read_number(L = #lexer{ch = C}, Acc) when C >= $0 andalso C =< $9 ->
-    NewL = advance(L),
-    read_number(NewL, [C | Acc]);
-read_number(L, Acc) ->
-    {lists:reverse(Acc), L}.
+read_number(L) ->
+    read_while(L, [], fun is_digit/1).
+
+is_letter(C) ->
+    C >= $a andalso C =< $z orelse C >= $A andalso C =< $Z orelse C == $_.
+
+is_digit(C) ->
+    C >= $0 andalso C =< $9.
 
 print_token(T = #token{literal = L}) ->
     case is_number(L) of
