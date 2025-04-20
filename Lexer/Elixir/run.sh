@@ -1,2 +1,3 @@
 #!/bin/sh
-elixir main.exs
+elixirc main.exs
+rm ./*.beam 2&>/dev/null
