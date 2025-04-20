@@ -3,6 +3,38 @@ Code.require_file("token.exs")
 defmodule Lexer do
   defstruct(input: "", curr: 0, peek: 0, char: nil)
 
+  @single_token_map %{
+    ?+ => :plus,
+    ?- => :dash,
+    ?* => :asterisk,
+    ?+ => :plus,
+    ?* => :asterisk,
+    ?/ => :slash,
+    ?- => :dash,
+    ?+ => :plus,
+    ?= => :equal,
+    ?< => :lessthan,
+    ?> => :greaterthan,
+    ?; => :semicolon,
+    ?: => :colon,
+    ?( => :lparen,
+    ?) => :rparen,
+    ?{ => :lbrace,
+    ?} => :rbrace
+  }
+
+  @identifier_map %{
+    "let" => :let,
+    "fn" => :function,
+    "if" => :if,
+    "else" => :else,
+    "return" => :return,
+    "true" => :boolean,
+    "false" => :boolean,
+    "bool" => :bool,
+    "int" => :int
+  }
+
   def new(input) do
     %Lexer{input: input}
     |> advance()
@@ -14,9 +46,6 @@ defmodule Lexer do
     case type do
       :eof ->
         :ok
-
-      :whitespace ->
-        parse_while(new_lexer)
 
       _ ->
         print_token(token)
@@ -37,118 +66,45 @@ defmodule Lexer do
     end
   end
 
-  def next_token(%Lexer{char: ?*} = lexer) do
-    {%Token{literal: "*", type: :asterisk}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?+} = lexer) do
-    {%Token{literal: "+", type: :plus}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?*} = lexer) do
-    {%Token{literal: "*", type: :asterisk}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?/} = lexer) do
-    {%Token{literal: "/", type: :slash}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?-} = lexer) do
-    {%Token{literal: "-", type: :dash}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?+} = lexer) do
-    {%Token{literal: "+", type: :plus}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?=} = lexer) do
-    {%Token{literal: "=", type: :equal}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?<} = lexer) do
-    {%Token{literal: "<", type: :lessthan}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?>} = lexer) do
-    {%Token{literal: ">", type: :greaterthan}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?;} = lexer) do
-    {%Token{literal: ";", type: :semicolon}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?:} = lexer) do
-    {%Token{literal: ":", type: :colon}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?(} = lexer) do
-    {%Token{literal: "(", type: :lparen}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?)} = lexer) do
-    {%Token{literal: ")", type: :rparen}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?{} = lexer) do
-    {%Token{literal: "{", type: :lbrace}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: ?}} = lexer) do
-    {%Token{literal: "}", type: :rbrace}, advance(lexer)}
-  end
-
-  def next_token(%Lexer{char: c} = lexer) when c in 0..32 do
-    {%Token{type: :whitespace}, advance(lexer)}
-  end
-
-  # alphabetic
-  def next_token(%Lexer{char: c} = lexer) when c in ?a..?z or c in ?A..?Z or c == ?_ do
-    {ident, newl} = read_identifier(lexer)
-    {%Token{literal: ident, type: :identifier}, newl}
-  end
-
-  # numeric
-  def next_token(%Lexer{char: c} = lexer) when c in ?0..?9 do
-    {ident, newl} = read_number(lexer)
-    {%Token{literal: ident, type: :number}, newl}
-  end
-
-  # EOF
-  def next_token(%Lexer{char: :eof} = lexer) do
-    {%Token{type: :eof}, advance(lexer)}
-  end
-
-  # all else (illegal)
   def next_token(%Lexer{char: c} = lexer) do
-    {%Token{literal: c, type: :illegal}, advance(lexer)}
+    cond do
+      is_whitespace?(c) ->
+        next_token(advance(lexer))
+
+      is_letter?(c) ->
+        {ident, new_lexer} = read_identifier(lexer)
+        {%Token{type: Map.get(@identifier_map, ident, :identifier), literal: ident}, new_lexer}
+
+      is_digit?(c) ->
+        {num, new_lexer} = read_number(lexer)
+        {%Token{type: :int, literal: num}, new_lexer}
+
+      c in Map.keys(@single_token_map) ->
+        token_type = Map.get(@single_token_map, c)
+        {%Token{type: token_type, literal: <<c>>}, advance(lexer)}
+
+      c == :eof ->
+        {%Token{type: :eof}, advance(lexer)}
+
+      true ->
+        {%Token{type: :illegal, literal: <<c>>}, advance(lexer)}
+    end
   end
 
-  # identifier
-  def read_identifier(%Lexer{char: c} = lexer) when c in ?a..?z or c in ?A..?Z or c == ?_ do
-    read_identifier(lexer, [])
+  def read_identifier(lexer) do
+    read_while(lexer, [], &is_letter?/1)
   end
 
-  def read_identifier(%Lexer{char: c} = lexer, acc) when c in ?a..?z or c in ?A..?Z or c == ?_ do
-    new_lexer = advance(lexer)
-    read_identifier(new_lexer, [c | acc])
+  def read_number(lexer) do
+    read_while(lexer, [], &is_digit?/1)
   end
 
-  def read_identifier(lexer, acc) do
-    {Enum.reverse(acc) |> IO.iodata_to_binary(), lexer}
-  end
-
-  # number
-  def read_number(%Lexer{char: c} = lexer) when c in ?0..?9 do
-    read_number(lexer, [])
-  end
-
-  def read_number(%Lexer{char: c} = lexer, acc) when c in ?0..?9 do
-    new_lexer = advance(lexer)
-    read_number(new_lexer, [c | acc])
-  end
-
-  def read_number(lexer, acc) do
-    {Enum.reverse(acc), lexer}
+  defp read_while(%Lexer{} = lexer, acc, predicate) do
+    if predicate.(lexer.char) do
+      read_while(advance(lexer), [lexer.char | acc], predicate)
+    else
+      {Enum.reverse(acc) |> IO.iodata_to_binary(), lexer}
+    end
   end
 
   def print_token(%Token{literal: literal, type: type}) do
@@ -157,4 +113,8 @@ defmodule Lexer do
 
   defp to_char_code(nil), do: nil
   defp to_char_code(<<c::utf8>>), do: c
+
+  defp is_letter?(c), do: c in ?a..?z or c in ?A..?Z or c == ?_
+  defp is_digit?(c), do: c in ?0..?9
+  defp is_whitespace?(c), do: c in 0..32
 end
