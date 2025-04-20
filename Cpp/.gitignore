@@ -1,28 +1,32 @@
+# Prerequisites
+*.d
+
 # Compiled Object files
-*.out
+*.slo
+*.lo
 *.o
 *.obj
+
+# Precompiled Headers
+*.gch
+*.pch
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
 
+# Fortran module files
+*.mod
+*.smod
+
 # Compiled Static libraries
+*.lai
+*.la
 *.a
 *.lib
 
 # Executables
 *.exe
-
-# DUB
-.dub
-docs.json
-__dummy.html
-docs/
-
-# Code coverage
-*.lst
-
-lib/
-bin/
+*.out
+*.app
