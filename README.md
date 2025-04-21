@@ -21,7 +21,10 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>C#</strong></summary>
 
   > ### 🗂️ Projects  
+  > - [Lexer](Csharp/Lexer/) – basic lexer with token types  
   > ### ⚙️ Tooling  
+  > - **Compiler:** `dotnet`  
+  > - **LSP:** `csharp-ls`  
 </details>
 <details>
   <summary><strong>Crystal</strong></summary>
