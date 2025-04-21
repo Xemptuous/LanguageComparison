@@ -27,6 +27,18 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   > - **LSP:** `csharp-ls`  
 </details>
 <details>
+  <summary><strong>Clojure</strong></summary>
+
+  > ### 🗂️ Projects  
+  > ### ⚙️ Tooling  
+</details>
+<details>
+  <summary><strong>Common Lisp</strong></summary>
+
+  > ### 🗂️ Projects  
+  > ### ⚙️ Tooling  
+</details>
+<details>
   <summary><strong>Crystal</strong></summary>
 
   > ### 🗂️ Projects
@@ -41,6 +53,12 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   > ### ⚙️ Tooling  
   > - **Compiler:** `dmd`  
   > - **LSP:** `serve_d`  
+</details>
+<details>
+  <summary><strong>Dart</strong></summary>
+
+  > ### 🗂️ Projects
+  > ### ⚙️ Tooling
 </details>
 <details>
   <summary><strong>Elixir</strong></summary>
@@ -100,12 +118,6 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   > - **LSP:** `hls`
 </details>
 <details>
-  <summary><strong>Julia</strong></summary>
-
-  > ### 🗂️ Projects
-  > ### ⚙️ Tooling
-</details>
-<details>
   <summary><strong>Java</strong></summary>
 
   > ### 🗂️ Projects  
@@ -115,6 +127,12 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   > - **Manager:** `maven`  
   > - **Compiler:** `mvn`  
   > - **LSP:** `jdtls`
+</details>
+<details>
+  <summary><strong>Julia</strong></summary>
+
+  > ### 🗂️ Projects
+  > ### ⚙️ Tooling
 </details>
 <details>
   <summary><strong>Koka</strong></summary>
@@ -178,13 +196,13 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   > - **LSP:** `based_pyright`
 </details>
 <details>
-  <summary><strong>Red/Rebol</strong></summary>
+  <summary><strong>Raku</strong></summary>
 
   > ### 🗂️ Projects
   > ### ⚙️ Tooling
 </details>
 <details>
-  <summary><strong>Raku</strong></summary>
+  <summary><strong>Red/Rebol</strong></summary>
 
   > ### 🗂️ Projects
   > ### ⚙️ Tooling
@@ -208,10 +226,27 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   > - **Extra** `rust-script` - allows shebang for running single files
 </details>
 <details>
+  <summary><strong>Swift</strong></summary>
+
+  > ### 🗂️ Projects
+  > ### ⚙️ Tooling
+</details>
+<details>
   <summary><strong>Tcl</strong></summary>
 
   > ### 🗂️ Projects
   > ### ⚙️ Tooling
+</details>
+<details>
+  <summary><strong>Typescript</strong></summary>
+
+  > ### 🗂️ Projects  
+  > - [Lexer](Typescript/Lexer/) – basic lexer with token types  
+  >
+  > ### ⚙️ Tooling  
+  > - **Compiler:** `npx tsc`  
+  > - **Runner:** `npx tsx`  
+  > - **LSP:** `typescript-language-server`
 </details>
 <details>
   <summary><strong>V</strong></summary>
@@ -230,17 +265,6 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 
   > ### 🗂️ Projects
   > ### ⚙️ Tooling
-</details>
-<details>
-  <summary><strong>Typescript</strong></summary>
-
-  > ### 🗂️ Projects  
-  > - [Lexer](Typescript/Lexer/) – basic lexer with token types  
-  >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `npx tsc`  
-  > - **Runner:** `npx tsx`  
-  > - **LSP:** `typescript-language-server`
 </details>
 <details>
   <summary><strong>Zig</strong></summary>
