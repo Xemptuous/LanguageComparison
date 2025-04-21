@@ -1,0 +1,43 @@
+import v = v stdlib;
+
+struct Point imm {
+    x int;
+    y int;
+}
+
+func greet(name str) {
+    vprint("Hi, " + name + "!\n");
+}
+
+func square(n int) int {
+    n * n
+}
+
+exported func main() {
+    name = "Alice";
+    x = 5;
+    y = 3.14;
+    active = true;
+
+    greet(name);
+    vprint("Square of " + x.str() + " is " + square(x).str() + "\n");
+
+    p = Point(x: 3, y: 4);
+    vprint("(" + p.x.str() + ", " + p.y.str() + ")\n");
+
+    nums = [1, 2, 3];
+    foreach i in nums {
+        vprint(i.str() + " ");
+    }
+    vprint("\n");
+
+    ages = Map<str, int>{"Alice": 30, "Bob": 25};
+    vprint("Bob is " + ages["Bob"].str() + " years old.\n");
+
+    count = 0;
+    while (count < 3) {
+        vprint("While loop: " + count.str() + "\n");
+        count = count + 1;
+    }
+}
+
