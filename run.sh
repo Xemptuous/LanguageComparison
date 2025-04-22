@@ -36,5 +36,5 @@ if [[ $language == "" ]]; then
 elif [[ $project == "" ]]; then
     echo "Project not specified."
 else
-    $scriptDir/$language/$project/$file
+    cd $scriptDir/$language/$project && ./$file
 fi
