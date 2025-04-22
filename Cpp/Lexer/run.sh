@@ -1,8 +1,8 @@
 #!/bin/sh
 
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
+outFile=$scriptDir/main.out
 
-run () { $scriptDir/main.out; }
-compile () { g++ $scriptDir/*.cpp -o $scriptDir/main.out; run; }
+compile() { g++ $scriptDir/*.cpp -o $outFile; $outFile; }
 
-[ -f $scriptDir/main.out ] && run || compile
+[ -f $outFile ] && $outFile || compile && $outFile;

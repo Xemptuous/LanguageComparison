@@ -15,6 +15,10 @@ struct Lexer {
 
     Token nextToken();
     string readIdentifier();
-    string readNumber();
+    pair<TokenType, string> readNumber();
+    string readString();
+    string readCharLiteral();
+    string readComment();
     void readChar();
+    char peekChar();
 };
