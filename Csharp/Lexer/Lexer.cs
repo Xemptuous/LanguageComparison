@@ -22,7 +22,7 @@ public class Lexer {
         if (peek < input.Length) {
             string ds = input[curr].ToString() + input[peek];
             if (ds == "//") return new Token(TokenType.COMMENT, readComment());
-            else if (Token.DOUBLE_TOKEN_MAP.ContainsKey(ds)) {
+            if (Token.DOUBLE_TOKEN_MAP.ContainsKey(ds)) {
                 readChar();
                 readChar();
                 return new Token(Token.DOUBLE_TOKEN_MAP[ds], ds);
@@ -67,11 +67,13 @@ public class Lexer {
                     TokenType tokenType =
                         Token.IDENTIFIER_MAP.GetValueOrDefault(ident, TokenType.IDENTIFIER);
                     return new Token(tokenType, ident);
-                } else if (Char.IsDigit(ch)) {
+                }
+                if (Char.IsDigit(ch)) {
                     Tuple<TokenType, string> res = readNumber();
                     return new Token(res.Item1, res.Item2);
                 }
-                return new Token(TokenType.ILLEGAL, "ILLEGAL");
+                tok = new Token(TokenType.ILLEGAL, "ILLEGAL");
+                break;
         }
         readChar();
         return tok;
@@ -93,6 +95,7 @@ public class Lexer {
                     readChar();
                     return new Tuple<TokenType, string>(TokenType.ILLEGAL, "ILLEGAL");
                 }
+                is_float = true;
             }
             readChar();
         }

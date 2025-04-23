@@ -19,7 +19,7 @@ Token Lexer::nextToken() {
     if (peek < input.length()) {
         string ds{input[curr], input[peek]};
         if (ds == "//") return Token(::COMMENT, readComment());
-        else if (DOUBLE_TOKEN_MAP.find(ds) != DOUBLE_TOKEN_MAP.end()) {
+        if (DOUBLE_TOKEN_MAP.find(ds) != DOUBLE_TOKEN_MAP.end()) {
             readChar();
             readChar();
             return Token(DOUBLE_TOKEN_MAP.at(ds), ds);
@@ -64,10 +64,10 @@ Token Lexer::nextToken() {
                 string ident = readIdentifier();
                 if (IDENTIFIER_MAP.find(ident) == IDENTIFIER_MAP.end())
                     return Token(::IDENTIFIER, ident);
-                else return Token(IDENTIFIER_MAP.at(ident), ident);
+                return Token(IDENTIFIER_MAP.at(ident), ident);
             }
             // number
-            else if (isdigit(ch)) {
+            if (isdigit(ch)) {
                 pair<TokenType, string> res = readNumber();
                 return Token(res.first, res.second);
             }
