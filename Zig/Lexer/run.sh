@@ -3,7 +3,7 @@ scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 
 cd $scriptDir
 
-run () { $scriptDir/zig-out/bin/lexer; }
-compile () { zig build && run;}
+run() { $scriptDir/zig-out/bin/lexer; }
+compileAndRun() { $scriptDir/compile.sh && run; }
 
-[ -f $scriptDir/zig-out/bin/lexer ] && run || compile
+[ -f $scriptDir/zig-out/bin/lexer ] && run || compileANdRun

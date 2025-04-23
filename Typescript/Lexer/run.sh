@@ -1,9 +1,9 @@
 #!/bin/sh
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 
-run () { node $scriptDir/build/main.js; }
-compile () { tsc -outDir $scriptDir/build $scriptDir/*.ts && run; }
+run() { node $scriptDir/build/main.js; }
+compileAndRun() { $scriptDir/compile.sh && run; }
 
-[ -f $scriptDir/build/main.js ] && run || compile
+[ -f $scriptDir/build/main.js ] && run || compileAndRun
 
 # npx tsx ./main.ts

@@ -3,6 +3,8 @@
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 
 file=run.sh
+compile=false
+run=false
 while getopts ":hcr" opt; do
   case $opt in
     h)
@@ -10,10 +12,10 @@ while getopts ":hcr" opt; do
       exit 0
       ;;
     c)
-      file=compile.sh
+      compile=true
       ;;
     r)
-      file=run.sh
+      run=true
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -36,5 +38,8 @@ if [[ $language == "" ]]; then
 elif [[ $project == "" ]]; then
     echo "Project not specified."
 else
-    cd $scriptDir/$language/$project && ./$file
+    cd $scriptDir/$language/$project;
+    if ! $compile && ! $run; then ./compile.sh && ./run.sh; fi
+    $compile && ./compile.sh
+    $run && ./run.sh
 fi

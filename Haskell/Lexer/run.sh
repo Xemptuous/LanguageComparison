@@ -4,9 +4,10 @@ buildDir=$scriptDir/build
 binDir=$buildDir/bin
 
 mkdir -p $binDir
+mkdir -p $buildDir
 
 run () { $binDir/main.out; }
-compile () { ghc -dynamic -o $binDir/main.out -odir $buildDir -hidir $buildDir $scriptDir/*.hs && run; }
+compileAndRun() { $scriptDir/compile.sh && run; }
 
-[[ -f $buildDir/Main.hi && -f $buildDir/Main.o ]] && run || compile
+[[ -f $buildDir/Main.hi && -f $buildDir/Main.o ]] && run || compileAndRun
 

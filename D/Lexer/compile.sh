@@ -1,6 +1,6 @@
 #!/bin/sh
 
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
-outFile=$scriptDir/main.out
+binDir=$scriptDir/bin
 
-g++ $scriptDir/*.cpp -o $outFile
+cd $scriptDir && dmd *.d -of=bin/app.out -od=lib

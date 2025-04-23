@@ -3,6 +3,7 @@
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 outFile=$scriptDir/main.out
 
-compile() { g++ $scriptDir/*.cpp -o $outFile; $outFile; }
+run() { $outFile; }
+compileAndRun() { $scriptDir/compile.sh && run; }
 
-[ -f $outFile ] && $outFile || compile && $outFile;
+[ -f $outFile ] && run || compileAndRun;

@@ -1,9 +1,8 @@
 #!/bin/bash
 
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
-cd $scriptDir
 
-run () { $scriptDir/main.out; }
-compile () { nim c -o:main.out --run main.nim && run; }
+run () { cd $scriptDir && $scriptDir/main.out; }
+compileAndRun() { $scriptDir/compile.sh && run; }
 
-[ -f $scriptDir/main.out ] && run || compile
+[ -f $scriptDir/main.out ] && run || compileAndRun

@@ -1,4 +1,8 @@
 #!/bin/bash
 
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
-cd $scriptDir && cargo run
+
+run() { $scriptDir/target/debug/lexer;  }
+compileAndRun() { $scriptDir/compile.sh && run; }
+
+[ -f $scriptDir/target/debug/lexer ] && run || compileAndRun

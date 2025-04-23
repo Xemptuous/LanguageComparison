@@ -6,6 +6,6 @@ buildDir="$scriptDir/_build"
 mkdir -p $buildDir
 
 run () { cd $buildDir; elixir -e 'Main.main'; }
-compile () { elixirc main.exs -o $buildDir && run; }
+compileAndRun() { $scriptDir/compile.sh && run; }
 
-[ -f $buildDir/Elixir.Main.beam ] && run || compile
+[ -f $buildDir/Elixir.Main.beam ] && run || compileAndRun
