@@ -13,7 +13,7 @@ Token Lexer::nextToken() {
     while (isspace(this->ch))
         readChar();
 
-    Token tok = Token(::_EOF, "\0");
+    Token tok;
 
     // if a peek is possible, try checking double tokens
     if (peek < input.length()) {
@@ -27,7 +27,7 @@ Token Lexer::nextToken() {
     }
 
     switch (this->ch) {
-        case '\0': return tok;
+        case '\0': return Token(::_EOF, "\0"); break;
         case '!':  tok = Token(::EXCLAMATION, "!"); break;
         case '@':  tok = Token(::AT, "@"); break;
         case '#':  tok = Token(::HASHTAG, "#"); break;

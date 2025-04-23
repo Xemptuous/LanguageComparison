@@ -91,6 +91,7 @@ struct Token {
     string literal;
     TokenType type;
 
+    Token() = default;
     Token(TokenType type, string literal) : type(type), literal(literal) {};
     inline void print() {
         string type = (const char*[]){
