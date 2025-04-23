@@ -117,7 +117,7 @@ string Lexer::readCharLiteral() {
 }
 
 string Lexer::readComment() {
-    uint64_t pos = curr + 2;
+    uint64_t pos = curr;
     while (ch != 0 && ch != '\n' && ch != '\r')
         readChar();
     return input.substr(pos, curr - pos);

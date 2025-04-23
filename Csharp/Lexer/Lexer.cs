@@ -121,7 +121,7 @@ public class Lexer {
     }
 
     private string readComment() {
-        int pos = curr + 2;
+        int pos = curr;
         while (ch != 0 && ch != '\n' && ch != '\r')
             readChar();
         return input.Substring(pos, curr - pos);

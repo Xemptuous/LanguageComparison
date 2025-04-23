@@ -205,7 +205,7 @@ class Lexer
 
     string readComment()
     {
-        auto pos = this.curr + 2;
+        auto pos = this.curr;
         while (this.ch != '\0' && this.ch != '\n' && this.ch != '\r')
             this.readChar();
         return this.input[pos .. this.curr];
