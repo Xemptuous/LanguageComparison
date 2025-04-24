@@ -17,26 +17,107 @@ public class Lexer {
         this.readChar();
     }
 
+    private static class Pair {
+        TokenType type;
+        String literal;
+
+        Pair(TokenType t, String l) {
+            this.type = t;
+            this.literal = l;
+        }
+    }
+
     public Token nextToken() {
         Token tok = new Token(TokenType.EOF, "\0");
 
-        while (Character.isWhitespace(this.ch))
-            this.readChar();
+        while (Character.isWhitespace(ch))
+            readChar();
 
-        switch (this.ch) {
+        if (peek < input.length()) {
+            String ds = String.valueOf(input.charAt(curr)) + input.charAt(peek);
+            if (ds.charAt(0) == '/' && ds.charAt(1) == '/') {
+                return new Token(TokenType.COMMENT, readComment());
+            } else if (Token.DOUBLE_TOKEN_MAP.containsKey(ds)) {
+                readChar();
+                readChar();
+                return new Token(Token.DOUBLE_TOKEN_MAP.get(ds), ds);
+            }
+        }
+
+        switch (ch) {
             case '\0':
                 return tok;
+            case '!':
+                tok = new Token(TokenType.EXCLAMATION, "!");
+                break;
+            case '@':
+                tok = new Token(TokenType.AT, "@");
+                break;
+            case '#':
+                tok = new Token(TokenType.HASHTAG, "#");
+                break;
+            case '$':
+                tok = new Token(TokenType.DOLLAR, "$");
+                break;
+            case '%':
+                tok = new Token(TokenType.PERCENT, "%");
+                break;
+            case '^':
+                tok = new Token(TokenType.CARET, "^");
+                break;
+            case '&':
+                tok = new Token(TokenType.AMPERSAND, "&");
+                break;
             case '*':
                 tok = new Token(TokenType.ASTERISK, "*");
                 break;
+            case '(':
+                tok = new Token(TokenType.LPAREN, "(");
+                break;
+            case ')':
+                tok = new Token(TokenType.RPAREN, ")");
+                break;
             case '-':
-                tok = new Token(TokenType.DASH, "-");
+                tok = new Token(TokenType.MINUS, "-");
+                break;
+            case '_':
+                tok = new Token(TokenType.UNDERSCORE, "_");
                 break;
             case '+':
                 tok = new Token(TokenType.PLUS, "+");
                 break;
             case '=':
-                tok = new Token(TokenType.EQUAL, "=");
+                tok = new Token(TokenType.ASSIGN, "=");
+                break;
+            case '[':
+                tok = new Token(TokenType.LBRACKET, "[");
+                break;
+            case ']':
+                tok = new Token(TokenType.RBRACKET, "]");
+                break;
+            case '{':
+                tok = new Token(TokenType.LBRACE, "{");
+                break;
+            case '}':
+                tok = new Token(TokenType.RBRACE, "}");
+                break;
+            case ';':
+                tok = new Token(TokenType.SEMICOLON, ";");
+                break;
+            case ':':
+                tok = new Token(TokenType.COLON, ":");
+                break;
+            case '\'':
+                tok = new Token(TokenType.CHAR, readCharLiteral());
+                break;
+            case '"':
+                tok = new Token(TokenType.STRING, readString());
+                break;
+            case ',':
+                tok = new Token(TokenType.COMMA, ",");
+                break;
+            case '.':
+                tok = new Token(TokenType.PERIOD, ".");
                 break;
             case '<':
                 tok = new Token(TokenType.LESSTHAN, "<");
@@ -47,55 +128,80 @@ public class Lexer {
             case '/':
                 tok = new Token(TokenType.SLASH, "/");
                 break;
-            case ';':
-                tok = new Token(TokenType.SEMICOLON, ";");
+            case '?':
+                tok = new Token(TokenType.QUESTION, "?");
                 break;
-            case ':':
-                tok = new Token(TokenType.COLON, ":");
+            case '\\':
+                tok = new Token(TokenType.BACKSLASH, "\\");
                 break;
-            case '(':
-                tok = new Token(TokenType.LPAREN, "(");
-                break;
-            case ')':
-                tok = new Token(TokenType.RPAREN, ")");
-                break;
-            case '{':
-                tok = new Token(TokenType.LBRACE, "{");
-                break;
-            case '}':
-                tok = new Token(TokenType.RBRACE, "}");
+            case '|':
+                tok = new Token(TokenType.PIPE, "|");
                 break;
             default:
-                if (Character.isAlphabetic(this.ch)) {
-                    String ident = this.readIdentifier();
-                    TokenType ttype = Token.IDENTIFIER_MAP.get(ident);
-                    return ttype != null ? new Token(ttype, ident) : new Token(TokenType.IDENTIFIER, ident);
-                } else if (Character.isDigit(this.ch)) {
-                    return new Token(TokenType.NUMBER, this.readNumber());
+                if (Character.isAlphabetic(ch)) {
+                    String ident = readIdentifier();
+                    TokenType ttype = Token.IDENTIFIER_MAP.getOrDefault(ident, TokenType.IDENTIFIER);
+                    return new Token(ttype, ident);
+                } else if (Character.isDigit(ch)) {
+                    Pair num = readNumber();
+                    return new Token(num.type, num.literal);
                 } else {
                     return new Token(TokenType.ILLEGAL, "ILLEGAL");
                 }
         }
-        this.readChar();
+        readChar();
         return tok;
     }
 
     private String readIdentifier() {
-        int pos = this.curr;
-        while (Character.isLetter(this.ch) || this.ch == '_')
-            this.readChar();
-        return this.input.substring(pos, this.curr);
+        int pos = curr;
+        while (Character.isLetter(ch) || ch == '_')
+            readChar();
+        return input.substring(pos, curr);
     }
 
-    private String readNumber() {
-        int pos = this.curr;
-        while (Character.isDigit(this.ch))
-            this.readChar();
-        return this.input.substring(pos, this.curr);
+    private Pair readNumber() {
+        int pos = curr;
+        boolean is_float = false;
+        while (Character.isDigit(ch) || ch == '.') {
+            if (ch == '.') {
+                if (is_float) {
+                    readChar();
+                    return new Pair(TokenType.ILLEGAL, "ILLEGAL");
+                }
+                is_float = true;
+            }
+            readChar();
+        }
+
+        return new Pair(is_float ? TokenType.FLOAT : TokenType.NUMBER, input.substring(pos, curr));
+    }
+
+    private String readString() {
+        readChar();
+        int pos = curr;
+        while (ch != '\0' && ch != '\"')
+            readChar();
+        return input.substring(pos, curr);
+    }
+
+    private String readCharLiteral() {
+        readChar();
+        int pos = curr;
+        while (ch != '\0' && ch != '\'')
+            readChar();
+        return input.substring(pos, curr);
+    }
+
+    private String readComment() {
+        int pos = curr;
+        while (ch != '\0' && ch != '\n' && ch != '\r')
+            readChar();
+        return input.substring(pos, curr);
     }
 
     private void readChar() {
-        this.ch = this.peek >= this.input.length() ? '\0' : this.input.charAt(this.peek);
-        this.curr = this.peek++;
+        ch = peek >= input.length() ? '\0' : input.charAt(peek);
+        curr = peek++;
     }
 }

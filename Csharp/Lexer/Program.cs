@@ -37,7 +37,8 @@ let otherCounter = 20;
 while counter < 10 or otherCounter > 10 {
     otherCounter -= 1;
     counter++;
-}";
+}
+";
 
 Lexer lexer = new Lexer(input);
 
