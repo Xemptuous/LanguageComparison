@@ -1,0 +1,13 @@
+dmd
+dotnet-sdk-8.0
+elixir
+erlang
+ghc
+jdk21-openjdk
+lua
+maven
+nim
+odin
+rust
+typescript
+zig
