@@ -20,13 +20,13 @@ impl Lexer<'_> {
             peek: Default::default(),
             char: Default::default(),
         };
-        lex.read_char();
+        lex.advance();
         lex
     }
 
     pub fn next_token(&self) -> token::Token<'_> {
         while self.char.get().is_whitespace() {
-            self.read_char();
+            self.advance();
         }
 
         if let Some(ds) = self.input.get(self.curr.get()..self.peek.get() + 1) {
@@ -34,8 +34,8 @@ impl Lexer<'_> {
                 return Token::new(Comment, self.read_comment());
             }
             if let Some(tok_type) = get_double_token_map().get(ds) {
-                self.read_char();
-                self.read_char();
+                self.advance();
+                self.advance();
                 return Token::new(*tok_type, ds);
             }
         }
@@ -63,7 +63,7 @@ impl Lexer<'_> {
             '}' => Token::new(Rbrace, "}"),
             ';' => Token::new(Semicolon, ";"),
             ':' => Token::new(Colon, ":"),
-            '\'' => Token::new(Char, self.read_char_literal()),
+            '\'' => Token::new(Char, self.read_char()),
             '"' => Token::new(String, self.read_string()),
             ',' => Token::new(Comma, ","),
             '.' => Token::new(Period, "."),
@@ -90,7 +90,7 @@ impl Lexer<'_> {
             },
             _ => Token::new(Illegal, "ILLEGAL"),
         };
-        self.read_char();
+        self.advance();
         tok
     }
 
@@ -100,12 +100,12 @@ impl Lexer<'_> {
         while self.char.get().is_numeric() || self.char.get() == '.' {
             if self.char.get() == '.' {
                 if is_float {
-                    self.read_char();
+                    self.advance();
                     return (TokenType::Illegal, "ILLEGAL");
                 }
                 is_float = true;
             }
-            self.read_char();
+            self.advance();
         }
         if is_float {
             (TokenType::Float, &self.input[pos..self.curr.get()])
@@ -117,25 +117,25 @@ impl Lexer<'_> {
     fn read_identifier(&self) -> &str {
         let pos = self.curr.get();
         while self.char.get().is_alphanumeric() || self.char.get() == '_' {
-            self.read_char();
+            self.advance();
         }
         &self.input[pos..self.curr.get()]
     }
 
     fn read_string(&self) -> &str {
-        self.read_char();
+        self.advance();
         let pos = self.curr.get();
         while self.char.get() != '"' {
-            self.read_char();
+            self.advance();
         }
         &self.input[pos..self.curr.get()]
     }
 
-    fn read_char_literal(&self) -> &str {
-        self.read_char();
+    fn read_char(&self) -> &str {
+        self.advance();
         let pos = self.curr.get();
         while self.char.get() != '\'' {
-            self.read_char();
+            self.advance();
         }
         &self.input[pos..self.curr.get()]
     }
@@ -143,12 +143,12 @@ impl Lexer<'_> {
     fn read_comment(&self) -> &str {
         let pos = self.curr.get();
         while self.char.get() != '\n' && self.char.get() != '\r' {
-            self.read_char();
+            self.advance();
         }
         &self.input[pos..self.curr.get()]
     }
 
-    fn read_char(&self) {
+    fn advance(&self) {
         let peek = self.peek.get();
         if peek >= self.input.len() {
             self.char.set('\0')

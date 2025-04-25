@@ -8,7 +8,7 @@ type Lexer* = object
     curr*: int
     peek*: int
 
-proc readCharacter*(self: var Lexer) =
+proc advance*(self: var Lexer) =
     if self.peek >= self.input.len:
         self.char = '\0'
     else:
@@ -18,13 +18,13 @@ proc readCharacter*(self: var Lexer) =
 
 proc newLexer*(input: string): Lexer =
     var lex: Lexer = Lexer(input: input, char: '\0', curr: 0, peek: 0)
-    lex.readCharacter()
+    lex.advance()
     return lex
 
 proc readIdentifier(self: var Lexer): string =
     let pos = self.curr
     while isAlphaAscii(self.char) or isDigit(self.char) or self.char == '_':
-        self.readCharacter()
+        self.advance()
     return self.input[pos..self.curr - 1]
 
 proc readNumber(self: var Lexer): (TokenType, string) =
@@ -35,34 +35,34 @@ proc readNumber(self: var Lexer): (TokenType, string) =
             if is_float:
                 return (TokenType.Illegal, "ILLEGAL")
             is_float = true
-        self.readCharacter()
+        self.advance()
     if is_float:
         return (TokenType.Float, self.input[pos..self.curr - 1])
     return (TokenType.Number, self.input[pos..self.curr - 1])
 
 proc readString(self: var Lexer): string =
-    self.readCharacter()
+    self.advance()
     let pos = self.curr
     while self.char != '"' and self.char != '\0':
-        self.readCharacter()
+        self.advance()
     return self.input[pos..self.curr - 1]
 
-proc readCharLiteral(self: var Lexer): string =
-    self.readCharacter()
+proc readChar(self: var Lexer): string =
+    self.advance()
     let pos = self.curr
     while self.char != '\'' and self.char != '\0':
-        self.readCharacter()
+        self.advance()
     return self.input[pos..self.curr - 1]
 
 proc readComment(self: var Lexer): string =
     let pos = self.curr
     while self.char != '\n' and self.char != '\r':
-        self.readCharacter()
+        self.advance()
     return self.input[pos..self.curr - 1]
 
 proc nextToken*(self: var Lexer): Token =
     while isSpaceAscii(self.char):
-        self.readCharacter()
+        self.advance()
 
     var tok: Token
 
@@ -71,8 +71,8 @@ proc nextToken*(self: var Lexer): Token =
         if ds == "//":
             return newToken(TokenType.Comment, self.readComment())
         if DOUBLE_TOKEN_MAP.hasKey(ds):
-            self.readCharacter()
-            self.readCharacter()
+            self.advance()
+            self.advance()
             return newToken(DOUBLE_TOKEN_MAP[ds], ds)
 
     case self.char:
@@ -97,7 +97,7 @@ proc nextToken*(self: var Lexer): Token =
     of '}': tok = newToken(TokenType.Rbrace, "}")
     of ';': tok = newToken(TokenType.Semicolon, ";")
     of ':': tok = newToken(TokenType.Colon, ":")
-    of '\'': tok = newToken(TokenType.Char, self.readCharLiteral())
+    of '\'': tok = newToken(TokenType.Char, self.readChar())
     of '"': tok = newToken(TokenType.String, self.readString())
     of ',': tok = newToken(TokenType.Comma, ",")
     of '.': tok = newToken(TokenType.Period, ".")
@@ -119,6 +119,6 @@ proc nextToken*(self: var Lexer): Token =
             return newToken(ttype, num)
         return newToken(TokenType.Illegal, "ILLEGAL")
 
-    self.readCharacter()
+    self.advance()
     return tok
 

@@ -120,7 +120,7 @@ class Lexer:
 
     def read_identifier(self) -> str:
         pos = self.curr
-        while self.ch is not None and self.ch.isalpha() or self.ch == "_":
+        while self.ch is not None and self.ch.isalnum() or self.ch == "_":
             self.advance()
         return self.input[pos : self.curr]
 

@@ -10,12 +10,12 @@ public class Lexer {
         this.peek  = 0;
         this.ch    = '\0';
 
-        this.readChar();
+        this.advance();
     }
 
     public Token nextToken() {
         while (Char.IsWhiteSpace(ch))
-            readChar();
+            advance();
 
         Token tok;
 
@@ -23,8 +23,8 @@ public class Lexer {
             string ds = input[curr].ToString() + input[peek];
             if (ds == "//") return new Token(TokenType.COMMENT, readComment());
             if (Token.DOUBLE_TOKEN_MAP.ContainsKey(ds)) {
-                readChar();
-                readChar();
+                advance();
+                advance();
                 return new Token(Token.DOUBLE_TOKEN_MAP[ds], ds);
             }
         }
@@ -51,7 +51,7 @@ public class Lexer {
             case '}':  tok = new Token(TokenType.RBRACE, "}"); break;
             case ';':  tok = new Token(TokenType.SEMICOLON, ";"); break;
             case ':':  tok = new Token(TokenType.COLON, ":"); break;
-            case '\'': tok = new Token(TokenType.CHAR, readCharLiteral()); break;
+            case '\'': tok = new Token(TokenType.CHAR, readChar()); break;
             case '"':  tok = new Token(TokenType.STRING, readString()); break;
             case ',':  tok = new Token(TokenType.COMMA, ","); break;
             case '.':  tok = new Token(TokenType.PERIOD, "."); break;
@@ -75,14 +75,14 @@ public class Lexer {
                 tok = new Token(TokenType.ILLEGAL, "ILLEGAL");
                 break;
         }
-        readChar();
+        advance();
         return tok;
     }
 
     private string readIdentifier() {
         int pos = curr;
-        while (Char.IsAsciiLetter(ch) || ch == '_')
-            readChar();
+        while (Char.IsAsciiLetterOrDigit(ch) || ch == '_')
+            advance();
         return input.Substring(pos, curr - pos);
     }
 
@@ -92,12 +92,12 @@ public class Lexer {
         while (Char.IsDigit(ch) || ch == '.') {
             if (ch == '.') {
                 if (is_float) {
-                    readChar();
+                    advance();
                     return new Tuple<TokenType, string>(TokenType.ILLEGAL, "ILLEGAL");
                 }
                 is_float = true;
             }
-            readChar();
+            advance();
         }
         return new Tuple<TokenType, string>(
             is_float ? TokenType.FLOAT : TokenType.NUMBER, input.Substring(pos, curr - pos)
@@ -105,29 +105,29 @@ public class Lexer {
     }
 
     private string readString() {
-        readChar();
+        advance();
         int pos = curr;
         while (ch != 0 && ch != '\"')
-            readChar();
+            advance();
         return input.Substring(pos, curr - pos);
     }
 
-    private string readCharLiteral() {
-        readChar();
+    private string readChar() {
+        advance();
         int pos = curr;
         while (ch != 0 && ch != '\'')
-            readChar();
+            advance();
         return input.Substring(pos, curr - pos);
     }
 
     private string readComment() {
         int pos = curr;
         while (ch != 0 && ch != '\n' && ch != '\r')
-            readChar();
+            advance();
         return input.Substring(pos, curr - pos);
     }
 
-    private void readChar() {
+    private void advance() {
         ch   = peek >= input.Length ? '\0' : input.ElementAt(peek);
         curr = peek++;
     }

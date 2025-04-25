@@ -19,13 +19,13 @@ class Lexer
         this.peek = 0;
         this.ch = '\0';
 
-        this.readChar();
+        this.advance();
     }
 
     Token nextToken()
     {
         while (isWhite(this.ch))
-            this.readChar();
+            this.advance();
 
         Token tok;
 
@@ -38,8 +38,8 @@ class Lexer
             }
             if (ds in DOUBLE_TOKEN_MAP)
             {
-                this.readChar();
-                this.readChar();
+                this.advance();
+                this.advance();
                 return Token(DOUBLE_TOKEN_MAP[ds], ds);
             }
         }
@@ -109,10 +109,10 @@ class Lexer
             tok = Token(TokenType.Colon, ":");
             break;
         case '\'':
-            tok = Token(TokenType.Char, "'");
+            tok = Token(TokenType.Char, this.readChar());
             break;
         case '"':
-            tok = Token(TokenType.String, "\"");
+            tok = Token(TokenType.String, this.readString());
             break;
         case ',':
             tok = Token(TokenType.Comma, ",");
@@ -152,15 +152,15 @@ class Lexer
             tok = Token(TokenType.Illegal, "ILLEGAL");
         }
 
-        this.readChar();
+        this.advance();
         return tok;
     }
 
     string readIdentifier()
     {
         auto pos = this.curr;
-        while (isAlpha(this.ch) || this.ch == '_')
-            this.readChar();
+        while (isAlphaNum(this.ch) || this.ch == '_')
+            this.advance();
         return this.input[pos .. this.curr];
     }
 
@@ -178,7 +178,7 @@ class Lexer
                 }
                 is_float = true;
             }
-            this.readChar();
+            this.advance();
         }
         if (is_float)
         {
@@ -189,17 +189,19 @@ class Lexer
 
     string readString()
     {
+        this.advance();
         auto pos = this.curr;
         while (this.ch != '\0' && this.ch != '"')
-            this.readChar();
+            this.advance();
         return this.input[pos .. this.curr];
     }
 
-    string readCharLiteral()
+    string readChar()
     {
+        this.advance();
         auto pos = this.curr;
         while (this.ch != '\0' && this.ch != '\'')
-            this.readChar();
+            this.advance();
         return this.input[pos .. this.curr];
     }
 
@@ -207,11 +209,11 @@ class Lexer
     {
         auto pos = this.curr;
         while (this.ch != '\0' && this.ch != '\n' && this.ch != '\r')
-            this.readChar();
+            this.advance();
         return this.input[pos .. this.curr];
     }
 
-    void readChar()
+    void advance()
     {
         if (this.peek >= this.input.length)
             this.ch = '\0';
