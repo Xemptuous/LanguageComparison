@@ -29,9 +29,7 @@ impl Lexer<'_> {
             self.read_char();
         }
 
-        if self.peek.get() < self.input.len() {
-            let ds = &self.input[self.curr.get()..self.peek.get() + 1];
-
+        if let Some(ds) = self.input.get(self.curr.get()..self.peek.get() + 1) {
             if ds == "//" {
                 return Token::new(Comment, self.read_comment());
             }
