@@ -6,12 +6,12 @@ Lexer::Lexer(string input) {
     this->peek  = 0;
     this->ch    = '\0';
 
-    this->readChar();
+    this->advance();
 }
 
 Token Lexer::nextToken() {
     while (isspace(this->ch))
-        readChar();
+        advance();
 
     Token tok;
 
@@ -20,8 +20,8 @@ Token Lexer::nextToken() {
         string ds{input[curr], input[peek]};
         if (ds == "//") return Token(::COMMENT, readComment());
         if (DOUBLE_TOKEN_MAP.find(ds) != DOUBLE_TOKEN_MAP.end()) {
-            readChar();
-            readChar();
+            advance();
+            advance();
             return Token(DOUBLE_TOKEN_MAP.at(ds), ds);
         }
     }
@@ -48,7 +48,7 @@ Token Lexer::nextToken() {
         case '}':  tok = Token(::RBRACE, "}"); break;
         case ';':  tok = Token(::SEMICOLON, ";"); break;
         case ':':  tok = Token(::COLON, ":"); break;
-        case '\'': tok = Token(::CHAR, readCharLiteral()); break;
+        case '\'': tok = Token(::CHAR, readChar()); break;
         case '"':  tok = Token(::STRING, readString()); break;
         case ',':  tok = Token(::COMMA, ","); break;
         case '.':  tok = Token(::PERIOD, "."); break;
@@ -73,14 +73,14 @@ Token Lexer::nextToken() {
             }
             tok = Token(::ILLEGAL, "ILLEGAL");
     };
-    readChar();
+    advance();
     return tok;
 }
 
 string Lexer::readIdentifier() {
     uint64_t pos = curr;
     while (isalpha(ch) || isdigit(ch) || ch == '_')
-        readChar();
+        advance();
     return input.substr(pos, curr - pos);
 }
 
@@ -90,44 +90,40 @@ pair<TokenType, string> Lexer::readNumber() {
     while (isdigit(ch) || ch == '.') {
         if (ch == '.') {
             if (is_float) {
-                readChar();
+                advance();
                 return {::ILLEGAL, "ILLEGAL"};
             }
             is_float = true;
         }
-        readChar();
+        advance();
     }
     return {is_float ? ::FLOAT : ::NUMBER, input.substr(pos, curr - pos)};
 }
 
 string Lexer::readString() {
-    readChar(); // skip "
+    advance(); // skip "
     uint64_t pos = curr;
     while (ch != '\"' && ch != 0)
-        readChar();
+        advance();
     return input.substr(pos, curr - pos);
 }
 
-string Lexer::readCharLiteral() {
-    readChar(); // skip '
+string Lexer::readChar() {
+    advance(); // skip '
     uint64_t pos = curr;
     while (ch != '\'' && ch != 0)
-        readChar();
+        advance();
     return input.substr(pos, curr - pos);
 }
 
 string Lexer::readComment() {
     uint64_t pos = curr;
     while (ch != 0 && ch != '\n' && ch != '\r')
-        readChar();
+        advance();
     return input.substr(pos, curr - pos);
 }
 
-void Lexer::readChar() {
+void Lexer::advance() {
     ch   = peek >= input.length() ? 0 : input[peek];
     curr = peek++;
-}
-
-char Lexer::peekChar() {
-    return peek >= input.length() ? 0 : input[peek];
 }

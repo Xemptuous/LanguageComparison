@@ -128,7 +128,7 @@ defmodule Lexer do
         {%Token{type: :string, literal: ident}, advance(new_lexer)}
 
       ch == ?' ->
-        {ident, new_lexer} = read_char_literal(advance(lexer))
+        {ident, new_lexer} = read_char(advance(lexer))
         {%Token{type: :char, literal: ident}, advance(new_lexer)}
 
       ch in Map.keys(@single_token_map) ->
@@ -163,7 +163,7 @@ defmodule Lexer do
     read_while(lexer, [], &(&1 != ?" and is_not_crlf(&1)))
   end
 
-  def read_char_literal(lexer) do
+  def read_char(lexer) do
     read_while(lexer, [], &(&1 != ?' and is_not_crlf(&1)))
   end
 

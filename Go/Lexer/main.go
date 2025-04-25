@@ -33,7 +33,7 @@ func main() {
 	const isTen = ten == 10 ? true : false;
 	const nothing = nil;
 
-	let mystring: str = ""Hello, Lexer!"";
+	let mystring: str = "Hello, Lexer!";
 	for ch: str in mystring {
 		print(ch); // a comment here!
 	}

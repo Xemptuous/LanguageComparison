@@ -14,7 +14,7 @@ public class Lexer {
         this.peek = 0;
         this.ch = '\0';
 
-        this.readChar();
+        this.advance();
     }
 
     private static class Pair {
@@ -31,15 +31,15 @@ public class Lexer {
         Token tok = new Token(TokenType.EOF, "\0");
 
         while (Character.isWhitespace(ch))
-            readChar();
+            advance();
 
         if (peek < input.length()) {
             String ds = String.valueOf(input.charAt(curr)) + input.charAt(peek);
             if (ds.charAt(0) == '/' && ds.charAt(1) == '/') {
                 return new Token(TokenType.COMMENT, readComment());
             } else if (Token.DOUBLE_TOKEN_MAP.containsKey(ds)) {
-                readChar();
-                readChar();
+                advance();
+                advance();
                 return new Token(Token.DOUBLE_TOKEN_MAP.get(ds), ds);
             }
         }
@@ -108,7 +108,7 @@ public class Lexer {
                 tok = new Token(TokenType.COLON, ":");
                 break;
             case '\'':
-                tok = new Token(TokenType.CHAR, readCharLiteral());
+                tok = new Token(TokenType.CHAR, readChar());
                 break;
             case '"':
                 tok = new Token(TokenType.STRING, readString());
@@ -149,14 +149,14 @@ public class Lexer {
                     return new Token(TokenType.ILLEGAL, "ILLEGAL");
                 }
         }
-        readChar();
+        advance();
         return tok;
     }
 
     private String readIdentifier() {
         int pos = curr;
-        while (Character.isLetter(ch) || ch == '_')
-            readChar();
+        while (Character.isLetterOrDigit(ch) || ch == '_')
+            advance();
         return input.substring(pos, curr);
     }
 
@@ -166,41 +166,41 @@ public class Lexer {
         while (Character.isDigit(ch) || ch == '.') {
             if (ch == '.') {
                 if (is_float) {
-                    readChar();
+                    advance();
                     return new Pair(TokenType.ILLEGAL, "ILLEGAL");
                 }
                 is_float = true;
             }
-            readChar();
+            advance();
         }
 
         return new Pair(is_float ? TokenType.FLOAT : TokenType.NUMBER, input.substring(pos, curr));
     }
 
     private String readString() {
-        readChar();
+        advance();
         int pos = curr;
         while (ch != '\0' && ch != '\"')
-            readChar();
+            advance();
         return input.substring(pos, curr);
     }
 
-    private String readCharLiteral() {
-        readChar();
+    private String readChar() {
+        advance();
         int pos = curr;
         while (ch != '\0' && ch != '\'')
-            readChar();
+            advance();
         return input.substring(pos, curr);
     }
 
     private String readComment() {
         int pos = curr;
         while (ch != '\0' && ch != '\n' && ch != '\r')
-            readChar();
+            advance();
         return input.substring(pos, curr);
     }
 
-    private void readChar() {
+    private void advance() {
         ch = peek >= input.length() ? '\0' : input.charAt(peek);
         curr = peek++;
     }
