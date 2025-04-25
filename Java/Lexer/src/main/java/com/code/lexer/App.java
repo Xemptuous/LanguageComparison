@@ -4,7 +4,7 @@ import com.code.lexer.Token.TokenType;
 
 public class App {
     public static void main(String[] args) {
-        String input = "struct Node {n"
+        String input = "struct Node {\n"
                 + "\tdata: int;"
                 + "\tleft: *Node;"
                 + "\tright: *Node;"

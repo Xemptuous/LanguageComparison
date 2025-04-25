@@ -6,33 +6,72 @@
 -record(lexer, {input, curr = 0, peek = 0, ch}).
 
 -define(SINGLE_TOKEN_MAP,
-        #{$+ => plus,
-          $- => dash,
+        #{$! => exclamation,
+          $@ => at,
+          $# => hashtag,
+          $$ => dollar,
+          $% => percent,
+          $^ => caret,
+          $& => ampersand,
           $* => asterisk,
-          $+ => plus,
-          $* => asterisk,
-          $/ => slash,
-          $- => dash,
-          $+ => plus,
-          $= => equal,
-          $< => lessthan,
-          $> => greaterthan,
-          $; => semicolon,
-          $: => colon,
           $( => lparen,
           $) => rparen,
+          $- => minus,
+          $_ => underscore,
+          $+ => plus,
+          $= => assign,
+          $[ => lbracket,
+          $] => rbracket,
           ${ => lbrace,
-          $} => rbrace}).
+          $} => rbrace,
+          $; => semicolon,
+          $: => colon,
+          $' => char,
+          $" => string,
+          $, => comma,
+          $. => period,
+          $< => lessthan,
+          $> => greaterthan,
+          $/ => slash,
+          $? => question,
+          $\\ => backslash,
+          $| => pipe}).
+-define(DOUBLE_TOKEN_MAP,
+        #{"==" => equal,
+          "!=" => not_equal,
+          "+=" => plus_eq,
+          "-=" => minus_eq,
+          "*=" => mult_eq,
+          "/=" => div_eq,
+          "<=" => lt_equal,
+          ">=" => gt_equal,
+          "++" => increment,
+          "--" => decrement,
+          "//" => comment}).
 -define(IDENTIFIER_MAP,
         #{"let" => let_,
+          "const" => const,
+          "struct" => struct,
           "fn" => function,
           "if" => if_,
           "else" => else_,
+          "switch" => switch,
+          "case" => case_,
+          "break" => break,
           "return" => return,
+          "while" => while,
+          "for" => for,
+          "and" => and_,
+          "or" => or_,
+          "in" => in,
           "true" => boolean,
           "false" => boolean,
           "bool" => bool,
-          "int" => int}).
+          "int" => int,
+          "f32" => f32,
+          "str" => str,
+          "nil" => nil,
+          "void" => void}).
 
 new(Input) ->
     advance(#lexer{input = Input}).
@@ -57,12 +96,29 @@ advance(L = #lexer{input = Input, peek = P}) ->
                     ch = lists:nth(P + 1, Input)}
     end.
 
-next_token(L = #lexer{ch = Ch}) ->
-    case maps:get(Ch, ?SINGLE_TOKEN_MAP, undefined) of
+next_token(L = #lexer{input = I,
+                      curr = C,
+                      ch = Ch}) ->
+    Ds = string:slice(I, C, 2),
+    case maps:get(Ds, ?DOUBLE_TOKEN_MAP, undefined) of
+        comment ->
+            {Cmt, NewL} = read_comment(L),
+            {#token{type = comment, literal = Cmt}, NewL};
         undefined ->
-            next_token_fallback(L);
-        TokenType ->
-            {#token{type = TokenType, literal = <<Ch>>}, advance(L)}
+            case maps:get(Ch, ?SINGLE_TOKEN_MAP, undefined) of
+                undefined ->
+                    next_token_fallback(L);
+                char ->
+                    {Char, NewL} = read_char(advance(L)),
+                    {#token{type = char, literal = Char}, advance(NewL)};
+                string ->
+                    {Str, NewL} = read_string(advance(L)),
+                    {#token{type = string, literal = Str}, advance(NewL)};
+                TokenType ->
+                    {#token{type = TokenType, literal = <<Ch>>}, advance(L)}
+            end;
+        TokType ->
+            {#token{type = TokType, literal = Ds}, advance(advance(L))}
     end.
 
 next_token_fallback(L = #lexer{ch = C}) ->
@@ -82,7 +138,14 @@ next_token_fallback(L = #lexer{ch = C}) ->
        % number
        C >= $0, C =< $9 ->
            {Num, NewL} = read_number(L),
-           {#token{type = number, literal = Num}, NewL};
+           case count($., Num) of
+               0 ->
+                   {#token{type = number, literal = Num}, NewL};
+               1 ->
+                   {#token{type = float, literal = Num}, NewL};
+               _ ->
+                   {#token{type = illegal, literal = "ILLEGAL"}, NewL}
+           end;
        true ->
            {#token{type = illegal, literal = <<C>>}, advance(L)}
     end.
@@ -97,10 +160,31 @@ read_while(L = #lexer{ch = Ch}, Acc, Pred) ->
     end.
 
 read_identifier(L) ->
-    read_while(L, [], fun is_letter/1).
+    read_while(L, [], fun is_alphanumeric/1).
 
 read_number(L) ->
-    read_while(L, [], fun is_digit/1).
+    read_while(L, [], fun is_number/1).
+
+read_string(L) ->
+    read_while(L, [], fun is_not_quote/1).
+
+read_char(L) ->
+    read_while(L, [], fun is_not_apostrophe/1).
+
+read_comment(L) ->
+    read_while(L, [], fun is_not_crlf/1).
+
+is_not_crlf(C) ->
+    C /= $\n andalso C /= $\r.
+
+is_not_apostrophe(C) ->
+    C /= $'.
+
+is_not_quote(C) ->
+    C /= $".
+
+is_alphanumeric(C) ->
+    is_letter(C) orelse is_digit(C).
 
 is_letter(C) ->
     C >= $a andalso C =< $z orelse C >= $A andalso C =< $Z orelse C == $_.
@@ -108,10 +192,20 @@ is_letter(C) ->
 is_digit(C) ->
     C >= $0 andalso C =< $9.
 
+is_number(C) ->
+    C >= $0 andalso C =< $9 orelse C == $..
+
 print_token(T = #token{literal = L}) ->
-    case is_number(L) of
+    case is_digit(L) of
         true ->
             io:format("Token literal: \"~c\" type: ~s~n", [T#token.literal, T#token.type]);
         false ->
             io:format("Token literal: \"~s\" type: ~s~n", [T#token.literal, T#token.type])
     end.
+
+count(_, []) ->
+    0;
+count(X, [X | XS]) ->
+    1 + count(X, XS);
+count(X, [_ | XS]) ->
+    count(X, XS).
