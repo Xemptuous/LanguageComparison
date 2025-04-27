@@ -6,18 +6,18 @@ from pathlib import Path
 
 def sp_run(path: Path, compile: bool):
     start_time = time.perf_counter()
-    result = subprocess.run(
-        path.joinpath("compile.sh" if compile else "run.sh"),
-        capture_output=True,
-        text=True,
-        check=True,
-    )
+    try:
+        subprocess.run(
+            path.joinpath("compile.sh" if compile else "run.sh"),
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except subprocess.CalledProcessError as e:
+        print(e.returncode, e.stderr)
+
     end_time = time.perf_counter()
     run_time = end_time - start_time
-    if result.returncode != 0:
-        print("ERROR")
-        print(result.stderr)
-        return
     print(f"{round(run_time * 1000)} ms")
 
 
