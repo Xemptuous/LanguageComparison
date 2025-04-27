@@ -1,6 +1,6 @@
 # 🌐 LanguageComparison
 
-A collection of the same projects implemented across multiple languages.  
+A collection of the same projects implemented across multiple languages.
 Goal: To compare syntax, performance, idioms, tooling, and language ergonomics—while having fun and learning.
 
 ---
@@ -10,33 +10,37 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 <details>
   <summary><strong>C++</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Cpp/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Cpp/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `g++`  
-  > - **LSP:** `clangd`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `g++`
+  > - **LSP:** `clangd`
 </details>
 <details>
   <summary><strong>C#</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Csharp/Lexer/) – basic lexer with token types  
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `dotnet`  
-  > - **LSP:** `csharp-ls`  
+  > ### 🗂️ Projects
+  > - [Lexer](Csharp/Lexer/) – basic lexer with token types
+  > ### ⚙️ Tooling
+  > - **Compiler:** `dotnet`
+  > - **LSP:** `csharp-ls`
 </details>
 <details>
   <summary><strong>Clojure</strong></summary>
 
-  > ### 🗂️ Projects  
-  > ### ⚙️ Tooling  
+  > ### 🗂️ Projects
+  > - [Lexer](Clojure/Lexer/) – basic lexer with token types
+  > ### ⚙️ Tooling
+  > - **Manager:** `leiningen`
+  > - **Compiler:** `lein`
+  > - **LSP:** `clojure-lsp`
 </details>
 <details>
   <summary><strong>Common Lisp</strong></summary>
 
-  > ### 🗂️ Projects  
-  > ### ⚙️ Tooling  
+  > ### 🗂️ Projects
+  > ### ⚙️ Tooling
 </details>
 <details>
   <summary><strong>Crystal</strong></summary>
@@ -47,12 +51,12 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 <details>
   <summary><strong>D</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](D/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](D/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `dmd`  
-  > - **LSP:** `serve_d`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `dmd`
+  > - **LSP:** `serve_d`
 </details>
 <details>
   <summary><strong>Dart</strong></summary>
@@ -63,25 +67,25 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 <details>
   <summary><strong>Elixir</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Elixir/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Elixir/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Manager:** `mix`  
-  > - **Compiler:** `elixirc`  
-  > - **Runner:** `elixir`  
-  > - **Shell:** `iex`  
+  > ### ⚙️ Tooling
+  > - **Manager:** `mix`
+  > - **Compiler:** `elixirc`
+  > - **Runner:** `elixir`
+  > - **Shell:** `iex`
   > - **LSP:** `elixir_ls`
 </details>
 <details>
   <summary><strong>Erlang</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Erlang/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Erlang/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `erlc`  
-  > - **Shell:** `erl`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `erlc`
+  > - **Shell:** `erl`
   > - **LSP:** `erlang_ls`
 </details>
 <details>
@@ -99,33 +103,33 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 <details>
   <summary><strong>Go</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Go/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Go/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Runner:** `go`  
+  > ### ⚙️ Tooling
+  > - **Runner:** `go`
   > - **LSP:** `gopls`
 </details>
 <details>
   <summary><strong>Haskell</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Haskell/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Haskell/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `ghc`  
-  > - **Shell:** `ghci`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `ghc`
+  > - **Shell:** `ghci`
   > - **LSP:** `hls`
 </details>
 <details>
   <summary><strong>Java</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Java/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Java/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Manager:** `maven`  
-  > - **Compiler:** `mvn`  
+  > ### ⚙️ Tooling
+  > - **Manager:** `maven`
+  > - **Compiler:** `mvn`
   > - **LSP:** `jdtls`
 </details>
 <details>
@@ -149,23 +153,23 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 <details>
   <summary><strong>Lua</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Lua/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Lua/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `luac`  
-  > - **Runner:** `lua`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `luac`
+  > - **Runner:** `lua`
   > - **LSP:** `lua_ls`
 </details>
 <details>
   <summary><strong>Nim</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Nim/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Nim/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `nim`  
-  > - **Runner:** `nim`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `nim`
+  > - **Runner:** `nim`
   > - **LSP:** `nim_langserver`
 </details>
 <details>
@@ -177,22 +181,22 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 <details>
   <summary><strong>Odin</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Odin/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Odin/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `odin`  
-  > - **Runner:** `odin`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `odin`
+  > - **Runner:** `odin`
   > - **LSP:** `ols`
 </details>
 <details>
   <summary><strong>Python</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Python/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Python/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Runner:** `python`  
+  > ### ⚙️ Tooling
+  > - **Runner:** `python`
   > - **LSP:** `based_pyright`
 </details>
 <details>
@@ -216,12 +220,12 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 <details>
   <summary><strong>Rust</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Rust/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Rust/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `cargo`  
-  > - **Runner:** `cargo`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `cargo`
+  > - **Runner:** `cargo`
   > - **LSP:** `rust-analyzer`
   > - **Extra** `rust-script` - allows shebang for running single files
 </details>
@@ -240,12 +244,12 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 <details>
   <summary><strong>Typescript</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Typescript/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Typescript/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `npx tsc`  
-  > - **Runner:** `npx tsx`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `npx tsc`
+  > - **Runner:** `npx tsx`
   > - **LSP:** `typescript-language-server`
 </details>
 <details>
@@ -269,11 +273,11 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
 <details>
   <summary><strong>Zig</strong></summary>
 
-  > ### 🗂️ Projects  
-  > - [Lexer](Zig/Lexer/) – basic lexer with token types  
+  > ### 🗂️ Projects
+  > - [Lexer](Zig/Lexer/) – basic lexer with token types
   >
-  > ### ⚙️ Tooling  
-  > - **Compiler:** `zig`  
-  > - **Runner:** `zig`  
+  > ### ⚙️ Tooling
+  > - **Compiler:** `zig`
+  > - **Runner:** `zig`
   > - **LSP:** `zls`
 </details>
