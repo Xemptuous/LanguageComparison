@@ -1,3 +1,5 @@
+#!/bin/python
+
 import subprocess
 import time
 from argparse import ArgumentParser, Namespace
