@@ -10,6 +10,12 @@ in various ways, especially beyond its standard library, package managers, and o
 curious about the languages themselves syntactically and linguistically, and how these deliberate choices 
 affected the overall feeling and flow of writing in each one.
 
+I have found that languages are always evolving by building ontop of those that came before; fixing up
+little things the authors thought were lacking from previous iterations, bundling in the strengths of
+various languages, and throwing in their own little touch of novelty.
+
+Eventually I want to write more languages than I already have, and this repo will serve as a reference of sorts.
+
 ---
 
 ## 🧰 Languages & Projects
