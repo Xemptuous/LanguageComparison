@@ -1,7 +1,6 @@
 #!/bin/sh
 scriptDir=$(dirname -- "$(readlink -f -- "$BASH_SOURCE")")
 
-file=run.sh
 compile=false
 run=false
 all=false
@@ -25,10 +24,6 @@ while getopts ":hcrat" opt; do
       echo "Invalid option: -$OPTARG" >&2
       exit 1
       ;;
-    # :)
-    #   echo "Option -$OPTARG requires an argument." >&2
-    #   exit 1
-    #   ;;
   esac
 done
 
