@@ -3,6 +3,13 @@
 A collection of the same projects implemented across multiple languages.
 Goal: To compare syntax, performance, idioms, tooling, and language ergonomics—while having fun and learning.
 
+## Main Inspiration
+
+I love programming languages and all their nuances. I have long wondered about what each language has to offer
+in various ways, especially beyond its standard library, package managers, and other bundled features; I was
+curious about the languages themselves syntactically and linguistically, and how these deliberate choices 
+affected the overall feeling and flow of writing in each one.
+
 ---
 
 ## 🧰 Languages & Projects
@@ -11,7 +18,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>C++</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Cpp/Lexer/) – basic lexer with token types
+  > - [Lexer](Cpp/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `g++`
@@ -21,7 +28,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>C#</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Csharp/Lexer/) – basic lexer with token types
+  > - [Lexer](Csharp/Lexer/) – basic lexer with static input
   > ### ⚙️ Tooling
   > - **Compiler:** `dotnet`
   > - **LSP:** `csharp-ls`
@@ -30,7 +37,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Clojure</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Clojure/Lexer/) – basic lexer with token types
+  > - [Lexer](Clojure/Lexer/) – basic lexer with static input
   > ### ⚙️ Tooling
   > - **Manager:** `leiningen`
   > - **Compiler:** `lein`
@@ -52,7 +59,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>D</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](D/Lexer/) – basic lexer with token types
+  > - [Lexer](D/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `dmd`
@@ -68,7 +75,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Elixir</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Elixir/Lexer/) – basic lexer with token types
+  > - [Lexer](Elixir/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Manager:** `mix`
@@ -81,7 +88,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Erlang</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Erlang/Lexer/) – basic lexer with token types
+  > - [Lexer](Erlang/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `erlc`
@@ -104,7 +111,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Go</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Go/Lexer/) – basic lexer with token types
+  > - [Lexer](Go/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Runner:** `go`
@@ -114,7 +121,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Haskell</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Haskell/Lexer/) – basic lexer with token types
+  > - [Lexer](Haskell/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `ghc`
@@ -125,7 +132,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Java</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Java/Lexer/) – basic lexer with token types
+  > - [Lexer](Java/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Manager:** `maven`
@@ -154,7 +161,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Lua</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Lua/Lexer/) – basic lexer with token types
+  > - [Lexer](Lua/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `luac`
@@ -165,7 +172,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Nim</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Nim/Lexer/) – basic lexer with token types
+  > - [Lexer](Nim/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `nim`
@@ -182,7 +189,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Odin</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Odin/Lexer/) – basic lexer with token types
+  > - [Lexer](Odin/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `odin`
@@ -193,7 +200,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Python</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Python/Lexer/) – basic lexer with token types
+  > - [Lexer](Python/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Runner:** `python`
@@ -221,7 +228,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Rust</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Rust/Lexer/) – basic lexer with token types
+  > - [Lexer](Rust/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `cargo`
@@ -245,7 +252,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Typescript</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Typescript/Lexer/) – basic lexer with token types
+  > - [Lexer](Typescript/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `npx tsc`
@@ -274,7 +281,7 @@ Goal: To compare syntax, performance, idioms, tooling, and language ergonomics�
   <summary><strong>Zig</strong></summary>
 
   > ### 🗂️ Projects
-  > - [Lexer](Zig/Lexer/) – basic lexer with token types
+  > - [Lexer](Zig/Lexer/) – basic lexer with static input
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `zig`
