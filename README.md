@@ -82,6 +82,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Elixir/Lexer/) – basic lexer with static input
+  > - [Calculator](Elixir/Calculator/) – shunting yard RPN parser + calculator
   >
   > ### ⚙️ Tooling
   > - **Manager:** `mix`
@@ -189,7 +190,12 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>OCaml</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Lexer](Ocaml/Lexer/) – basic lexer with static input
+  >
   > ### ⚙️ Tooling
+  > - **Compiler:** `dune`
+  > - **Runner:** `ocaml`
+  > - **LSP:** `ocamllsp`
 </details>
 <details>
   <summary><strong>Odin</strong></summary>
