@@ -1,104 +1,136 @@
 module Lexer where
 
-import Data.Char (isDigit, isLetter, isSpace)
-import Data.Map (Map, fromList)
+import Data.ByteString.Char8 qualified as C
+import Data.Char (isAlpha, isAlphaNum, isNumber, isSpace)
 import Data.Map qualified as M
-import Data.Maybe (fromJust, isNothing)
 import Token
-import Token qualified as T
 
-data Lexer = Lexer
-  { input :: String,
-    curr :: Int,
-    peek :: Int,
-    char :: Maybe Char
-  }
-  deriving (Show)
-
-newLexer :: String -> Lexer
-newLexer input = advance (Lexer input 0 0 Nothing)
+data Lexer = Lexer C.ByteString Int Int deriving (Show)
 
 advance :: Lexer -> Lexer
-advance lexer@(Lexer input _ p _)
-  | p >= length input = lexer {char = Nothing}
-  | otherwise =
-      lexer
-        { curr = p,
-          peek = p + 1,
-          char = Just (input !! p)
-        }
+advance (Lexer i _ p)
+  | p >= C.length i = Lexer i p p
+  | otherwise = Lexer i p (succ p)
 
-nextToken :: Lexer -> (Token, Lexer)
-nextToken lexer@(Lexer _ _ _ Nothing) =
-  (Token "" Eof, lexer)
-nextToken lexer@(Lexer input curr peek (Just ch)) = do
-  let ds = take 2 $ drop curr input :: String
+advance2 :: Lexer -> Lexer
+advance2 lexer = advance $ advance lexer
 
-  case M.lookup ds T.doubleTokenMap of
-    Just ttype -> do
-      let newL = advance lexer
-      if ttype == Comment
-        then do
-          let (c, newL) = readComment lexer
-          (Token c Comment, newL)
-        else (Token ds ttype, advance newL)
-    Nothing -> do
-      case ch of
-        '"' ->
-          let (str, newL) = readString (advance lexer)
-           in (Token str String, advance newL)
-        '\'' ->
-          let (str, newL) = readChar (advance lexer)
-           in (Token str Char, advance newL)
-        _ ->
-          case M.lookup ch T.singleTokenMap of
-            Just ttype -> (Token [ch] ttype, advance lexer)
-            Nothing -> nextTokenFallback lexer
+currentChar :: Lexer -> Char
+currentChar (Lexer input curr _) =
+  if curr >= C.length input then '\0' else C.index input curr
 
-nextTokenFallback :: Lexer -> (Token, Lexer)
-nextTokenFallback lexer@(Lexer _ _ _ Nothing) =
-  (Token "" Eof, lexer)
-nextTokenFallback lexer@(Lexer _ _ _ (Just ch))
-  | ch == '"' =
-      let (str, newL) = readString (advance lexer)
-       in (Token str String, newL)
-  | ch == '\'' =
-      let (str, newL) = readChar (advance lexer)
-       in (Token str Char, newL)
-  | isSpace ch = nextToken (advance lexer)
-  | isLetter ch || ch == '_' =
-      let (ident, newL) = readIdentifier lexer
-          tokType = M.findWithDefault Identifier ident keywordMap
-       in (Token ident tokType, newL)
-  | isDigit ch = do
-      let (num, newL) = readNumber lexer
-      case count num '.' of
-        0 -> (Token num Number, newL)
-        1 -> (Token num Float, newL)
-        _ -> (Token num Illegal, newL)
-  | otherwise =
-      (Token [ch] Illegal, advance lexer)
+-- if curr >= length input then '\0' else input !! curr
 
-readWhile :: (Char -> Bool) -> Lexer -> (String, Lexer)
-readWhile predicate = go []
+peekChar :: Lexer -> Char
+peekChar (Lexer input _ peek) =
+  if peek >= C.length input then '\0' else C.index input peek
+
+parse :: Lexer -> (Token, Lexer)
+parse lexer
+  | isSpace ch = parse $ advance lexer
+  | isAlpha ch = readIdentifier lexer []
+  | isNumber ch = readNumber lexer []
+  | ch == '=' = case peek of
+      '=' -> (Token Equal [ch, peek], advance2 lexer)
+      _ -> (Token Assign [ch], advance lexer)
+  | ch == '{' = (Token Lbrace [ch], advance lexer)
+  | ch == '}' = (Token Rbrace [ch], advance lexer)
+  | ch == ';' = (Token Semicolon [ch], advance lexer)
+  | ch == ':' = (Token Colon [ch], advance lexer)
+  | ch == '(' = (Token Lparen [ch], advance lexer)
+  | ch == ')' = (Token Rparen [ch], advance lexer)
+  | ch == '[' = (Token Lbracket [ch], advance lexer)
+  | ch == ']' = (Token Rbracket [ch], advance lexer)
+  | ch == ',' = (Token Comma [ch], advance lexer)
+  | ch == '.' = (Token Period [ch], advance lexer)
+  | ch == '\'' = readChar (advance lexer) ""
+  | ch == '"' = readString (advance lexer) ""
+  | ch == '!' = case peek of
+      '=' -> (Token NotEqual [ch, peek], advance2 lexer)
+      _ -> (Token Exclamation [ch], advance lexer)
+  | ch == '*' = case peek of
+      '=' -> (Token MultEq [ch, peek], advance2 lexer)
+      _ -> (Token Asterisk [ch], advance lexer)
+  | ch == '-' = case peek of
+      '=' -> (Token MinusEq [ch, peek], advance2 lexer)
+      '-' -> (Token Decrement [ch, peek], advance2 lexer)
+      _ -> (Token Minus [ch], advance lexer)
+  | ch == '+' = case peek of
+      '=' -> (Token PlusEq [ch, peek], advance2 lexer)
+      '+' -> (Token Increment [ch, peek], advance2 lexer)
+      _ -> (Token Plus [ch], advance lexer)
+  | ch == '<' = case peek of
+      '=' -> (Token LtEqual [ch, peek], advance2 lexer)
+      _ -> (Token Lessthan [ch], advance lexer)
+  | ch == '>' = case peek of
+      '=' -> (Token GtEqual [ch, peek], advance2 lexer)
+      _ -> (Token Greaterthan [ch], advance lexer)
+  | ch == '/' = case peek of
+      '=' -> (Token DivEq [ch, peek], advance2 lexer)
+      '/' -> readComment lexer ""
+      _ -> (Token Slash [ch], advance lexer)
+  | ch == '?' = (Token Question [ch], advance lexer)
+  | ch == '%' = (Token Percent [ch], advance lexer)
+  | ch == '\\' = (Token Backslash [ch], advance lexer)
+  | ch == '_' = (Token Underscore [ch], advance lexer)
+  | ch == '^' = (Token Caret [ch], advance lexer)
+  | ch == '&' = (Token Ampersand [ch], advance lexer)
+  | ch == '|' = (Token Pipe [ch], advance lexer)
+  | ch == '@' = (Token At [ch], advance lexer)
+  | ch == '#' = (Token Hashtag [ch], advance lexer)
+  | ch == '$' = (Token Dollar [ch], advance lexer)
+  | ch == '\0' = (Token EOF [ch], lexer)
+  | otherwise = (Token Illegal [ch], lexer)
   where
-    go acc lexer@(Lexer _ _ _ (Just ch))
-      | predicate ch = go (ch : acc) (advance lexer)
-    go acc lexer = (reverse acc, lexer)
+    ch = currentChar lexer
+    peek = peekChar lexer
 
-readIdentifier :: Lexer -> (String, Lexer)
-readIdentifier = readWhile isIdentChar where isIdentChar c = isLetter c || c == '_'
+readWhile :: Lexer -> String -> (Char -> Bool) -> (String, Lexer)
+readWhile lexer acc f
+  | x == '\0' = (acc, lexer)
+  | f x = readWhile (advance lexer) (x : acc) f
+  | otherwise = (reverse acc, lexer)
+  where
+    x = currentChar lexer
 
-readString :: Lexer -> (String, Lexer)
-readString = readWhile isNotQuote where isNotQuote c = c /= '"'
+readIdentifier :: Lexer -> String -> (Token, Lexer)
+readIdentifier lexer acc =
+  let (ident, newLex) = readWhile lexer acc isIdent
+      tokType = M.findWithDefault Identifier ident keywordMap
+   in (Token tokType ident, newLex)
+  where
+    isIdent c = isAlphaNum c || c == '_'
 
-readChar :: Lexer -> (String, Lexer)
-readChar = readWhile isNotApostrophe where isNotApostrophe c = c /= '\''
+readNumber :: Lexer -> String -> (Token, Lexer)
+readNumber lexer acc =
+  let (num, newLex) = readWhile lexer acc isNum
+   in case count '.' num of
+        0 -> (Token Number num, newLex)
+        1 -> (Token Float num, newLex)
+        _ -> (Token Illegal num, newLex)
+  where
+    isNum c = isNumber c || c == '.'
 
-readComment :: Lexer -> (String, Lexer)
-readComment = readWhile isNotNewline where isNotNewline c = c /= '\r' && c /= '\n'
+readString :: Lexer -> String -> (Token, Lexer)
+readString lexer acc =
+  let (str, newLex) = readWhile lexer acc isString
+   in (Token String str, advance newLex)
+  where
+    isString c = c /= '"'
 
-readNumber :: Lexer -> (String, Lexer)
-readNumber = readWhile isNum where isNum c = isDigit c || c == '.'
+readChar :: Lexer -> String -> (Token, Lexer)
+readChar lexer acc =
+  let (str, newLex) = readWhile lexer acc isChar
+   in (Token Char str, advance newLex)
+  where
+    isChar c = c /= '\''
 
-count xs find = length (filter (== find) xs)
+readComment :: Lexer -> String -> (Token, Lexer)
+readComment lexer acc =
+  let (str, newLex) = readWhile lexer acc isComment
+   in (Token Comment str, newLex)
+  where
+    isComment c = c `notElem` ['\r', '\n']
+
+count :: (Eq a) => a -> [a] -> Int
+count x = length . filter (== x)
