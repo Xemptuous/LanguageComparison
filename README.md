@@ -31,6 +31,15 @@ Eventually I want to write more languages than I already have, and this repo wil
   > - **LSP:** `ada-language-server`
 </details>
 <details>
+  <summary><strong>BASIC</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](BASIC/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Compiler:** `fbc (freebasic)`
+</details>
+<details>
   <summary><strong>C</strong></summary>
 
   > ### 🗂️ Projects
