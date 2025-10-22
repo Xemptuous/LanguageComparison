@@ -21,10 +21,31 @@ Eventually I want to write more languages than I already have, and this repo wil
 ## 🧰 Languages & Projects
 
 <details>
+  <summary><strong>Ada</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](Ada/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Compiler:** `gnatmake`
+  > - **LSP:** `ada-language-server`
+</details>
+<details>
+  <summary><strong>C</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](C/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Compiler:** `gcc`
+  > - **LSP:** `clangd`
+</details>
+<details>
   <summary><strong>C++</strong></summary>
 
   > ### 🗂️ Projects
   > - [Lexer](Cpp/Lexer/) – basic lexer with static input
+  > - [Fib](Cpp/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `g++`
@@ -35,6 +56,8 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Csharp/Lexer/) – basic lexer with static input
+  > - [Fib](Csharp/Fib/) – basic recursive fibonacci
+
   > ### ⚙️ Tooling
   > - **Compiler:** `dotnet`
   > - **LSP:** `csharp-ls`
@@ -44,6 +67,8 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Clojure/Lexer/) – basic lexer with static input
+  > - [Fib](Clojure/Fib/) – basic recursive fibonacci
+
   > ### ⚙️ Tooling
   > - **Manager:** `leiningen`
   > - **Compiler:** `lein`
@@ -53,19 +78,26 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>Common Lisp</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](CommonLisp/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Compiler:** `sbcl`
 </details>
 <details>
   <summary><strong>Crystal</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Crystal/Fib/) – basic recursive fibonacci
+
   > ### ⚙️ Tooling
+  > - **Compiler:** `crystal`
+  > - **LSP:** `crystalline`
 </details>
 <details>
   <summary><strong>D</strong></summary>
 
   > ### 🗂️ Projects
   > - [Lexer](D/Lexer/) – basic lexer with static input
+  > - [Fib](D/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `dmd`
@@ -75,14 +107,17 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>Dart</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Dart/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Compiler:** `dart`
+  > - **Runner:** `dart`
 </details>
 <details>
   <summary><strong>Elixir</strong></summary>
 
   > ### 🗂️ Projects
   > - [Lexer](Elixir/Lexer/) – basic lexer with static input
-  > - [Calculator](Elixir/Calculator/) – shunting yard RPN parser + calculator
+  > - [Fib](Elixir/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Manager:** `mix`
@@ -96,6 +131,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Erlang/Lexer/) – basic lexer with static input
+  > - [Fib](Erlang/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `erlc`
@@ -106,19 +142,37 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>F#</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Fsharp/Fib/) – basic recursive fibonacci
+  >
   > ### ⚙️ Tooling
+  > - **Compiler:** `dotnet`
+  > - **LSP:** `fsautocomplete`
 </details>
 <details>
   <summary><strong>Fennel</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Fennel/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Runner:** `fennel || lua`
+  > - **Compiler:** `fennel || luac`
+</details>
+<details>
+  <summary><strong>Fortran</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](Fortran/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Compiler:** `gfortran`
+  > - **LSP:** `fortls`
 </details>
 <details>
   <summary><strong>Go</strong></summary>
 
   > ### 🗂️ Projects
   > - [Lexer](Go/Lexer/) – basic lexer with static input
+  > - [Fib](Go/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Runner:** `go`
@@ -129,6 +183,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Haskell/Lexer/) – basic lexer with static input
+  > - [Fib](Haskell/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `ghc`
@@ -140,6 +195,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Java/Lexer/) – basic lexer with static input
+  > - [Fib](Java/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Manager:** `maven`
@@ -150,25 +206,34 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>Julia</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Julia/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  >- **Runner:** `julia`
 </details>
 <details>
   <summary><strong>Koka</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Koka/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  >- **Compiler:** `koka`
 </details>
 <details>
   <summary><strong>Kotlin</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Kotlin/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  >- **Compiler:** `kotlinc`
+  >- **Runner:** `java`
+  >- **LSP:** `kotlin-language-server`
 </details>
 <details>
   <summary><strong>Lua</strong></summary>
 
   > ### 🗂️ Projects
   > - [Lexer](Lua/Lexer/) – basic lexer with static input
+  > - [Fib](Lua/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `luac`
@@ -180,6 +245,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Nim/Lexer/) – basic lexer with static input
+  > - [Fib](Nim/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `nim`
@@ -191,9 +257,11 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Ocaml/Lexer/) – basic lexer with static input
+  > - [Fib](Ocaml/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
-  > - **Compiler:** `dune`
+  > - **Manager:** `dune`
+  > - **Compiler:** `ocamlc`
   > - **Runner:** `ocaml`
   > - **LSP:** `ocamllsp`
 </details>
@@ -202,6 +270,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Odin/Lexer/) – basic lexer with static input
+  > - [Fib](Odin/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `odin`
@@ -209,14 +278,54 @@ Eventually I want to write more languages than I already have, and this repo wil
   > - **LSP:** `ols`
 </details>
 <details>
+  <summary><strong>Pascal</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](Pascal/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Compiler:** `fpc`
+</details>
+<details>
+  <summary><strong>Perl</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](Perl/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Compiler:** `pp`
+  > - **LSP:** `perlnavigator`
+</details>
+<details>
+  <summary><strong>PHP</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](PHP/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Runner:** `php`
+  > - **LSP:** `phpactor`
+</details>
+<details>
   <summary><strong>Python</strong></summary>
 
   > ### 🗂️ Projects
   > - [Lexer](Python/Lexer/) – basic lexer with static input
+  > - [Fib](Odin/Fib/) – basic recursive fibonacci
   >
   > ### ⚙️ Tooling
   > - **Runner:** `python`
   > - **LSP:** `based_pyright`
+</details>
+<details>
+  <summary><strong>R</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](R/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Runner:** `R`
+  > - **Compiler:** `R`
 </details>
 <details>
   <summary><strong>Raku</strong></summary>
@@ -228,13 +337,25 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>Red/Rebol</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Red/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Runner:** `red`
 </details>
 <details>
   <summary><strong>ReScript</strong></summary>
 
   > ### 🗂️ Projects
   > ### ⚙️ Tooling
+</details>
+<details>
+  <summary><strong>Ruby</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](Ruby/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Runner:** `ruby`
+  > - **LSP:** `ruby-lsp`
 </details>
 <details>
   <summary><strong>Rust</strong></summary>
@@ -249,16 +370,41 @@ Eventually I want to write more languages than I already have, and this repo wil
   > - **Extra** `rust-script` - allows shebang for running single files
 </details>
 <details>
+  <summary><strong>Scala</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](Scala/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Runner:** `scala`
+  > - **Compiler:** `scalac`
+</details>
+<details>
+  <summary><strong>StandardML</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](StandardML/Fib/) – basic recursive fibonacci
+  >
+  > ### ⚙️ Tooling
+  > - **Compiler:** `mlton`
+  > - **LSP:** `millet`
+</details>
+<details>
   <summary><strong>Swift</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Swift/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Compiler:** `swift`
+  > - **Runner:** `swift`
 </details>
 <details>
   <summary><strong>Tcl</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Tcl/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Runner:** `tclsh`
 </details>
 <details>
   <summary><strong>Typescript</strong></summary>
@@ -275,7 +421,9 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>V</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](V/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Compiler:** `v`
 </details>
 <details>
   <summary><strong>Vale</strong></summary>

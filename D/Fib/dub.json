@@ -1,0 +1,9 @@
+{
+	"authors": [
+		"xempt"
+	],
+	"copyright": "Copyright © 2025, xempt",
+	"description": "A minimal D application.",
+	"license": "proprietary",
+	"name": "fib"
+}

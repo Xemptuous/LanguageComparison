@@ -1,0 +1,16 @@
+.dub
+docs.json
+__dummy.html
+docs/
+/fib
+fib.so
+fib.dylib
+fib.dll
+fib.a
+fib.lib
+fib-test-*
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst
