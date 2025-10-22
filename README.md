@@ -386,6 +386,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](Rust/Lexer/) – basic lexer with static input
   > - [Brainfuck](Rust/Brainfuck/) – simple brainfuck interpreter for hello world
+  > - [ShuntingYard](Rust/ShuntingYard/) – shunting yard implementation
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `cargo`
