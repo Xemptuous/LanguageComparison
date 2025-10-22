@@ -331,7 +331,10 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>Raku</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Raku/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Runner:** `raku`
+  > - **Compiler:** `rakudo`
 </details>
 <details>
   <summary><strong>Red/Rebol</strong></summary>
@@ -435,7 +438,9 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>Wren</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Wren/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Runner:** `wren`
 </details>
 <details>
   <summary><strong>Zig</strong></summary>
