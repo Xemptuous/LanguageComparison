@@ -1,9 +1,24 @@
+module Main where
+
+import Control.Monad (forM_)
+import Data.ByteString.Char8 qualified as C
 import Lexer
 import Token
 
+parseWhile :: Lexer -> [Token] -> [Token]
+parseWhile lexer tokens =
+  let (token@(Token ttype _), newLexer) = parse lexer
+   in case ttype of
+        EOF -> reverse tokens
+        _ -> parseWhile newLexer $ token : tokens
+
 main :: IO ()
 main = do
-  let input =
+  forM_ tokens $ \s -> print s
+  where
+    tokens = parseWhile (Lexer input 0 1) []
+    input =
+      C.pack
         "struct Node {\n\
         \    data: int;\n\
         \    left: *Node;\n\
@@ -43,12 +58,3 @@ main = do
         \    otherCounter -= 1;\n\
         \    counter++;\n\
         \}"
-
-  parseWhile (newLexer input)
-
-parseWhile :: Lexer -> IO ()
-parseWhile lexer =
-  let (tok, newLexer) = nextToken lexer
-   in if token_type tok == Eof
-        then return ()
-        else print tok >> parseWhile newLexer

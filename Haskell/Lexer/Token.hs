@@ -1,16 +1,10 @@
--- module Token (Token (literal, token_type), TokenType, printToken) where
 module Token where
 
 import Data.Map qualified as M
 
-data Token = Token
-  { literal :: String,
-    token_type :: TokenType
-  }
-  deriving (Show)
-
 data TokenType
-  = Eof
+  = EOF
+  | Whitespace
   | Illegal
   | Let
   | Const
@@ -80,60 +74,9 @@ data TokenType
   | Increment
   | Decrement
   | Comment
-  deriving (Show, Eq)
+  deriving (Enum, Show, Eq)
 
-type TokenMap = M.Map Char TokenType
-
-singleTokenMap :: TokenMap
-singleTokenMap =
-  M.fromList
-    [ ('!', Exclamation),
-      ('@', At),
-      ('#', Hashtag),
-      ('$', Dollar),
-      ('%', Percent),
-      ('^', Caret),
-      ('&', Ampersand),
-      ('*', Asterisk),
-      ('(', Lparen),
-      (')', Rparen),
-      ('-', Minus),
-      ('_', Underscore),
-      ('+', Plus),
-      ('=', Assign),
-      ('[', Lbracket),
-      (']', Rbracket),
-      ('{', Lbrace),
-      ('}', Rbrace),
-      (';', Semicolon),
-      (':', Colon),
-      ('\'', Char),
-      ('"', String),
-      (',', Comma),
-      ('.', Period),
-      ('<', Lessthan),
-      ('>', Greaterthan),
-      ('/', Slash),
-      ('?', Question),
-      ('\\', Backslash),
-      ('|', Pipe)
-    ]
-
-doubleTokenMap :: M.Map String TokenType
-doubleTokenMap =
-  M.fromList
-    [ ("==", Equal),
-      ("!=", NotEqual),
-      ("+=", PlusEq),
-      ("-=", MinusEq),
-      ("*=", MultEq),
-      ("/=", DivEq),
-      ("<=", LtEqual),
-      (">=", GtEqual),
-      ("++", Increment),
-      ("--", Decrement),
-      ("//", Comment)
-    ]
+data Token = Token TokenType String deriving (Show)
 
 type KeywordMap = M.Map String TokenType
 
