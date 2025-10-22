@@ -44,6 +44,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Fib](C/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](C/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `gcc`
@@ -55,6 +56,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](Cpp/Lexer/) – basic lexer with static input
   > - [Fib](Cpp/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](Cpp/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `g++`
@@ -66,6 +68,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](Csharp/Lexer/) – basic lexer with static input
   > - [Fib](Csharp/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](Csharp/Brainfuck/) – simple brainfuck interpreter for hello world
 
   > ### ⚙️ Tooling
   > - **Compiler:** `dotnet`
@@ -107,6 +110,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](D/Lexer/) – basic lexer with static input
   > - [Fib](D/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](D/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `dmd`
@@ -152,6 +156,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Fib](Fsharp/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](Fsharp/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `dotnet`
@@ -182,6 +187,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](Go/Lexer/) – basic lexer with static input
   > - [Fib](Go/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](Go/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Runner:** `go`
@@ -205,6 +211,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](Java/Lexer/) – basic lexer with static input
   > - [Fib](Java/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](Java/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Manager:** `maven`
@@ -243,6 +250,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](Lua/Lexer/) – basic lexer with static input
   > - [Fib](Lua/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](Lua/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `luac`
@@ -255,6 +263,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](Nim/Lexer/) – basic lexer with static input
   > - [Fib](Nim/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](Nim/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `nim`
@@ -267,6 +276,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](Ocaml/Lexer/) – basic lexer with static input
   > - [Fib](Ocaml/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](Ocaml/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Manager:** `dune`
@@ -321,6 +331,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > ### 🗂️ Projects
   > - [Lexer](Python/Lexer/) – basic lexer with static input
   > - [Fib](Odin/Fib/) – basic recursive fibonacci
+  > - [Brainfuck](Python/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Runner:** `python`
@@ -374,6 +385,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Rust/Lexer/) – basic lexer with static input
+  > - [Brainfuck](Rust/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `cargo`
@@ -423,6 +435,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Typescript/Lexer/) – basic lexer with static input
+  > - [Brainfuck](Typescript/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `npx tsc`
@@ -456,6 +469,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Zig/Lexer/) – basic lexer with static input
+  > - [Brainfuck](Zig/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `zig`
