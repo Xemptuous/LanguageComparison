@@ -73,6 +73,8 @@ def bench_dir(
 def main(args: Namespace):
     results: list[Result] = []
     for d in sorted(Path(__file__).parent.iterdir()):
+        if d.name not in args.languages:
+            continue
         proj_dir = d.joinpath(args.project)
         if d.is_dir() and (proj_dir / "run.sh").exists():
             if args.build:
@@ -108,10 +110,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("project", type=lambda s: s.capitalize())
     parser.add_argument(
-        "--language",
-        "-l",
-        type=str,
-        choices=dirs,
+        "--languages", "-l", nargs="+", choices=dirs, default=dirs
     )
     parser.add_argument("--runs", "-r", type=int, default=1)
     parser.add_argument("--warmups", "-w", type=int, default=0)
@@ -126,12 +125,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     args.str_pad = str_pad
-    # if args.runs:
-    #     RUNS = args.runs
-    # if args.warmups:
-    #     WARMUPS = args.warmups
-    # SORT_BY = args.sort_by
-    # SORT_DIR = args.sort_dir
-    # DO_BUILD = args.build
 
     main(args)
