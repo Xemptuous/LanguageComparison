@@ -100,11 +100,11 @@ def main(args: Namespace):
 
 
 if __name__ == "__main__":
-    dirs = [
+    dirs = {
         d.name
         for d in Path(__file__).parent.iterdir()
         if d.is_dir() and d.name[0] != "." and d.name[0].isupper()
-    ]
+    }
     str_pad = len(max(dirs, key=lambda d: len(d)))
 
     parser = ArgumentParser()
@@ -112,6 +112,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--languages", "-l", nargs="+", choices=dirs, default=dirs
     )
+    parser.add_argument("--exclude", "-e", nargs="+", choices=dirs, default={})
     parser.add_argument("--runs", "-r", type=int, default=1)
     parser.add_argument("--warmups", "-w", type=int, default=0)
     parser.add_argument(
@@ -125,5 +126,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     args.str_pad = str_pad
+
+    args.languages = set(args.languages).difference(args.exclude)
 
     main(args)
