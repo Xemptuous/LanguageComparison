@@ -87,6 +87,15 @@ Eventually I want to write more languages than I already have, and this repo wil
   > - **LSP:** `clojure-lsp`
 </details>
 <details>
+  <summary><strong>COBOL</strong></summary>
+
+  > ### 🗂️ Projects
+  > - [Fib](COBOL/Fib/) – basic recursive fibonacci
+  > ### ⚙️ Tooling
+  > - **Compiler:** `cobc (gnucobol)`
+</details>
+<details>
+<details>
   <summary><strong>Common Lisp</strong></summary>
 
   > ### 🗂️ Projects
