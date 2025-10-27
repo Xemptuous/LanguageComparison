@@ -387,6 +387,7 @@ Eventually I want to write more languages than I already have, and this repo wil
   > - [Lexer](Rust/Lexer/) – basic lexer with static input
   > - [Brainfuck](Rust/Brainfuck/) – simple brainfuck interpreter for hello world
   > - [ShuntingYard](Rust/ShuntingYard/) – shunting yard implementation
+  > - [Conway's Game Of Life](Rust/ConwayGameOfLife/) – conway's game of life with ncurses
   >
   > ### ⚙️ Tooling
   > - **Compiler:** `cargo`
