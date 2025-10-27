@@ -23,7 +23,6 @@
        PROGRAM-ID. Fib RECURSIVE.
        DATA DIVISION.
        LOCAL-STORAGE SECTION.
-       *> Per-call temps (private to each recursion frame)
        01 A          PIC S9(9)  COMP-5.
        01 B          PIC S9(9)  COMP-5.
        01 TMP        PIC S9(9)  COMP-5.
