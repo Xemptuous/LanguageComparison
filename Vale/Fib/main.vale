@@ -1,0 +1,14 @@
+import stdlib.*;
+
+func fib(n int) int {
+    if (n <= 1) {
+        return n;
+    }
+    return fib(n - 1) + fib(n - 2);
+}
+
+exported func main() {
+    foreach i in range(0, 31) {
+        println("fib(" + i + "): " + fib(i));
+    }
+}

@@ -1,0 +1,6 @@
+*.vpst
+*.vast
+*.c
+*.h
+*.out
+**/target/

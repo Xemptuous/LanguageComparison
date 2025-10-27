@@ -330,7 +330,7 @@ Eventually I want to write more languages than I already have, and this repo wil
 
   > ### 🗂️ Projects
   > - [Lexer](Python/Lexer/) – basic lexer with static input
-  > - [Fib](Odin/Fib/) – basic recursive fibonacci
+  > - [Fib](Python/Fib/) – basic recursive fibonacci
   > - [Brainfuck](Python/Brainfuck/) – simple brainfuck interpreter for hello world
   >
   > ### ⚙️ Tooling
@@ -456,7 +456,9 @@ Eventually I want to write more languages than I already have, and this repo wil
   <summary><strong>Vale</strong></summary>
 
   > ### 🗂️ Projects
+  > - [Fib](Vale/Fib/) – basic recursive fibonacci
   > ### ⚙️ Tooling
+  > - **Compiler:** `valec`
 </details>
 <details>
   <summary><strong>Wren</strong></summary>
