@@ -6,12 +6,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from time import perf_counter
 
-# RUNS = 0  # recorded runs
-# WARMUPS = 0  # unrecorded warmups
-# SORT_BY = "min"
-# DO_BUILD = False
-# STR_PAD = 0
-
 
 @dataclass
 class Result:
@@ -31,8 +25,8 @@ def run(cmd, cwd):
     return perf_counter() - start
 
 
-def maybe_build(dir: Path):
-    print(f"{dir.name:>STR_PAD} Building...", end="", flush=True)
+def maybe_build(dir: Path, str_pad: int):
+    print(f"{dir.name:>{str_pad}} Building...", end="", flush=True)
     build = dir / "build.sh"
     if build.exists() and build.is_file():
         sp.run(
@@ -78,7 +72,7 @@ def main(args: Namespace):
         proj_dir = d.joinpath(args.project)
         if d.is_dir() and (proj_dir / "run.sh").exists():
             if args.build:
-                maybe_build(proj_dir)
+                maybe_build(proj_dir, args.str_pad)
             print(f"{d.name:>{args.str_pad}} ", end="", flush=True)
             try:
                 res = bench_dir(d.name, proj_dir, args.runs, args.warmups)
@@ -91,8 +85,11 @@ def main(args: Namespace):
                 print(f"❌ failed (exit {e.returncode})")
 
     # Sort and print summary
-    results.sort(key=lambda r: r.__getattribute__(args.sort_by))
-    print("\nSorted by", args.sort_by, "(ascending):")
+    results.sort(
+        key=lambda r: r.__getattribute__(args.sort_by),
+        reverse=args.sort_dir == "asc",
+    )
+    print("\nSorted by", args.sort_by, f"({args.sort_dir}ending):")
     for r in results:
         print(
             f"{r.name:>{args.str_pad}} {args.sort_by}={r.__getattribute__(args.sort_by):.6f}s  mean={r.mean:.6f}s  stdev={r.stdev:.6f}s  best={r.min:.6f}s"
