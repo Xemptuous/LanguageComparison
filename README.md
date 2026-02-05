@@ -95,7 +95,6 @@ Eventually I want to write more languages than I already have, and this repo wil
   > - **Compiler:** `cobc (gnucobol)`
 </details>
 <details>
-<details>
   <summary><strong>Common Lisp</strong></summary>
 
   > ### 🗂️ Projects
